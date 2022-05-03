@@ -1,4 +1,4 @@
-package me.stumper66.lm_items;
+package io.github.stumper66.lm_items;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -7,7 +7,9 @@ import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -18,10 +20,11 @@ public class Commands implements CommandExecutor, TabCompleter {
 
     private final LM_Items main;
     private CommandSender sender;
+    private String[] args;
 
     public boolean onCommand(@NotNull final CommandSender sender, final @NotNull Command command, final @NotNull String label, final String @NotNull [] args) {
         this.sender = sender;
-        Utils.logger.info("args len: " + args.length);
+        this.args = args;
         if (!hasPermissions(null)) return true;
 
         if (args.length == 0){
@@ -38,6 +41,9 @@ public class Commands implements CommandExecutor, TabCompleter {
                 break;
             case "supported_plugins":
                 showSupportedPlugins();
+                break;
+            case "types":
+                showTypes();
                 break;
             default:
                 showSyntax();
@@ -57,7 +63,7 @@ public class Commands implements CommandExecutor, TabCompleter {
     }
 
     public void showSyntax() {
-        sender.sendMessage("Usage: info | installed_plugins | supported_plugins");
+        sender.sendMessage("Usage: info | installed_plugins | supported_plugins | types");
     }
 
     private void showInfo(){
@@ -67,24 +73,64 @@ public class Commands implements CommandExecutor, TabCompleter {
                 "Created by stumper66, for use with LevelledMobs");
     }
 
+    private void showTypes(){
+        if (!hasPermissions("types")) return;
+
+        if (args.length == 1){
+            sender.sendMessage("Must specify plugin name");
+            return;
+        }
+
+        final String pluginName = args[1];
+        if (!main.supportedPlugins.containsKey(pluginName)){
+            sender.sendMessage(String.format("'%s' is not a plugin supported by LM_Items", pluginName));
+            return;
+        }
+
+        final ItemsAPI itemsAPI = main.supportedPlugins.get(pluginName);
+        if (!itemsAPI.getIsInstalled()){
+            sender.sendMessage(String.format("'%s' is currently not installed", pluginName));
+            return;
+        }
+
+        final Collection<String> types = itemsAPI.getItemTypes();
+        if (types.isEmpty()){
+            sender.sendMessage("There are no types for this plugin known by LM_Items");
+            return;
+        }
+
+        final StringBuilder sb = new StringBuilder();
+        for (final String typeName : types){
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(typeName);
+        }
+
+        sender.sendMessage(sb.toString());
+    }
+
     private void showInstalledPlugins(){
+        if (!hasPermissions("installed_plugins")) return;
+
         final StringBuilder sb = new StringBuilder();
         for (final String plugin : main.supportedPlugins.keySet()){
             final ItemsAPI itemsAPI = main.supportedPlugins.get(plugin);
+            if (!itemsAPI.getIsInstalled()) continue;
 
             if (sb.length() > 0) sb.append(", ");
-            if (itemsAPI.getIsInstalled()) sb.append(plugin);
+            sb.append(plugin);
         }
 
         if (sb.length() > 0)
             sender.sendMessage("Installed plugins: " + sb);
         else
-            sender.sendMessage("There are now installed plugins that are supported");
+            sender.sendMessage("There are no installed plugins that are supported");
     }
     private void showSupportedPlugins(){
+        if (!hasPermissions("supported_plugins")) return;
+
         final StringBuilder sb = new StringBuilder();
 
-        for (final String pluginName : main.supportedPluginNames){
+        for (final String pluginName : main.supportedPlugins.keySet()){
             if (sb.length() > 0) sb.append(", ");
             sb.append(pluginName);
         }
@@ -95,7 +141,19 @@ public class Commands implements CommandExecutor, TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(final @NotNull CommandSender sender, final @NotNull Command command, final @NotNull String label, final @NotNull String @NotNull [] args){
         if (args.length <= 1)
-            return List.of("info", "installed_plugins", "supported_plugins");
+            return List.of("info", "installed_plugins", "supported_plugins", "types");
+
+        if (args.length == 2 && "types".equalsIgnoreCase(args[0]) && sender.hasPermission("lm_items.types")){
+            final List<String> plugins = new LinkedList<>();
+            for (final String plugin : main.supportedPlugins.keySet()){
+                final ItemsAPI itemsAPI = main.supportedPlugins.get(plugin);
+                if (itemsAPI.getIsInstalled())
+                    plugins.add(itemsAPI.getName());
+            }
+
+            Collections.sort(plugins);
+            return plugins;
+        }
 
         return Collections.emptyList();
     }

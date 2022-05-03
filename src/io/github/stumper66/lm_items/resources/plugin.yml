@@ -1,9 +1,9 @@
 name: LM_Items
 version: ${project.version}
-main: me.stumper66.lm_items.LM_Items
-softdepend:  [ ExecutableItems, MMOItems ]
-api-version: '1.16'
-load: POSTWORLD
+main: io.github.stumper66.lm_items.LM_Items
+softdepend: [ ExecutableItems, SCore, MMOItems, Coins ]
+api-version: '1.13'
+#load: POSTWORLD
 author: stumper66
 description: ${project.description}
 website: 'https://github.com/lokka30/LevelledMobs/wiki'

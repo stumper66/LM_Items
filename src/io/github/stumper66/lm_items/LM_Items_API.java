@@ -1,4 +1,4 @@
-package me.stumper66.lm_items;
+package io.github.stumper66.lm_items;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
