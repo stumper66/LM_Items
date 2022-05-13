@@ -24,14 +24,14 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
     public void onEnable() {
         final long startedTime = System.currentTimeMillis();
 
-        buildApiClasses();
         registerCommands();
+        registerListeners();
 
         Utils.logger.info(String.format("LM_Items start-up complete, took %s ms",
                 (System.currentTimeMillis() - startedTime)));
     }
 
-    private void buildApiClasses(){
+    void buildApiClasses(){
         final List<String> names = List.of("Coins", "MMOItems", "ExecutableItems");
 
         for (final String name : names) {
@@ -54,6 +54,10 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
             Utils.logger.warning("Command &b/lm_items&7 is unavailable, is it not registered in plugin.yml?");
         else
             cmd.setExecutor(new Commands(this));
+    }
+
+    private void registerListeners(){
+        Bukkit.getPluginManager().registerEvents(new EventHandlers(this), this);
     }
 
     @Override

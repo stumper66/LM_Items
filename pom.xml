@@ -6,7 +6,7 @@
 
     <groupId>io.github.stumper66</groupId>
     <artifactId>LM_Items</artifactId>
-    <version>0.91</version>
+    <version>0.92.1</version>
     <packaging>jar</packaging>
 
     <name>LM_Items</name>
@@ -139,14 +139,15 @@
             <!-- https://www.spigotmc.org/resources/custom-items-free-executable-items.77578/ -->
             <groupId>nomaven</groupId>
             <artifactId>ExecutableItems</artifactId>
-            <version>4.2.0.7</version>
+            <version>4.2.2.5</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <!-- https://www.spigotmc.org/resources/custom-items-free-executable-items.77578/ -->
+            <!-- Used by ExecutableItems -->
             <groupId>nomaven</groupId>
             <artifactId>SCore</artifactId>
-            <version>1.7.0.7</version>
+            <version>1.7.2.5</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -158,6 +159,7 @@
         </dependency>
         <dependency>
             <!-- https://www.spigotmc.org/resources/mythiclib.90306/ -->
+            <!-- Used by MMOItems -->
             <groupId>nomaven</groupId>
             <artifactId>MythicLib</artifactId>
             <version>1.0.19</version>

@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 @SuppressWarnings("unused")
 public class ExecutableItems implements ItemsAPI {
@@ -48,7 +49,9 @@ public class ExecutableItems implements ItemsAPI {
         if (!result.pluginIsInstalled)
             return result;
 
-        result.itemStack = com.ssomar.executableitems.api.ExecutableItemsAPI.getExecutableItem(itemId);
+        final Optional<com.ssomar.executableitems.executableitems.ExecutableItem> oOpt =
+                com.ssomar.executableitems.executableitems.ExecutableItemsManager.getInstance().getLoadedObjectWithID(itemId);
+        oOpt.ifPresent(executableItem -> result.itemStack = executableItem.buildItem(1, null, -147));
 
         return result;
     }
