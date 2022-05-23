@@ -13,7 +13,7 @@ import java.util.Collections;
 @SuppressWarnings("unused")
 public class EcoAPI implements ItemsAPI {
     public EcoAPI() {
-        this.isInstalled = Bukkit.getPluginManager().getPlugin(getName()) == null;
+        this.isInstalled = Bukkit.getPluginManager().getPlugin(getName()) != null;
     }
 
     private final boolean isInstalled;

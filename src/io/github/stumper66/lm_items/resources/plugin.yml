@@ -1,7 +1,7 @@
 name: LM_Items
 version: ${project.version}
 main: io.github.stumper66.lm_items.LM_Items
-softdepend: [ ExecutableItems, SCore, MMOItems, Coins ]
+softdepend: [ ExecutableItems, SCore, MMOItems, Coins, eco, EcoArmor, EcoCrates, EcoItems, Reforges, Talismans ]
 api-version: '1.13'
 load: POSTWORLD
 author: stumper66

@@ -46,7 +46,7 @@ public class EcoArmor implements ItemsAPI {
             return result;
 
         result.itemStack = com.willfp.eco.core.items.Items.lookup(
-                String.format("%s:%s", getName(), itemId.toLowerCase())
+                String.format("%s:%s", getName().toLowerCase(), itemId.toLowerCase())
         ).getItem();
 
         if (result.itemStack.getType() == Material.AIR)

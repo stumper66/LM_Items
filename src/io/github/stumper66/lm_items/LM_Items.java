@@ -1,6 +1,5 @@
 package io.github.stumper66.lm_items;
 
-import io.github.stumper66.lm_items.plugins.ecosupported.EcoItems;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,7 +32,7 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
     }
 
     void buildApiClasses(){
-        final List<String> names = List.of("Coins", "MMOItems", "ExecutableItems");
+        final List<String> names = List.of("Coins", "MMOItems", "ExecutableItems", "EcoAPI");
 
         for (final String name : names) {
             ItemsAPI api = null;

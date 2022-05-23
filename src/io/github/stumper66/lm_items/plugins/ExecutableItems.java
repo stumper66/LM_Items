@@ -1,6 +1,5 @@
 package io.github.stumper66.lm_items.plugins;
 
-import io.github.stumper66.lm_items.Utils;
 import io.github.stumper66.lm_items.GetItemResult;
 import io.github.stumper66.lm_items.ItemsAPI;
 import org.bukkit.Bukkit;
@@ -22,10 +21,8 @@ public class ExecutableItems implements ItemsAPI {
 
     private void checkDeps(){
         for (final String dep : List.of(getName(), "SCore")){
-            if (Bukkit.getPluginManager().getPlugin(dep) == null) {
-                Utils.logger.info("ExecutableItems: missing dep: " + dep);
+            if (Bukkit.getPluginManager().getPlugin(dep) == null)
                 return;
-            }
         }
 
         this.isInstalled = true;

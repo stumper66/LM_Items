@@ -135,8 +135,8 @@
             <version>1.18.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        <!-- https://github.com/Auxilor/eco -->
         <dependency>
+            <!-- https://github.com/Auxilor/eco -->
             <groupId>nomaven</groupId>
             <artifactId>eco</artifactId>
             <version>6.35.12</version>
