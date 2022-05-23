@@ -1,42 +1,29 @@
 package io.github.stumper66.lm_items.plugins;
 
-import io.github.stumper66.lm_items.Utils;
 import io.github.stumper66.lm_items.GetItemResult;
 import io.github.stumper66.lm_items.ItemsAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
 @SuppressWarnings("unused")
-public class ExecutableItems implements ItemsAPI {
-    public ExecutableItems() {
-        checkDeps();
+public class EcoAPI implements ItemsAPI {
+    public EcoAPI() {
+        this.isInstalled = Bukkit.getPluginManager().getPlugin(getName()) == null;
     }
 
-    private boolean isInstalled;
-
-    private void checkDeps(){
-        for (final String dep : List.of(getName(), "SCore")){
-            if (Bukkit.getPluginManager().getPlugin(dep) == null) {
-                Utils.logger.info("ExecutableItems: missing dep: " + dep);
-                return;
-            }
-        }
-
-        this.isInstalled = true;
-    }
+    private final boolean isInstalled;
 
     public boolean getIsInstalled() {
         return this.isInstalled;
     }
 
     public @NotNull String getName(){
-        return "ExecutableItems";
+        return "eco";
     }
 
     public @NotNull GetItemResult getItem(@Nullable final String type, @NotNull final String itemId) {
@@ -49,13 +36,13 @@ public class ExecutableItems implements ItemsAPI {
         if (!result.pluginIsInstalled)
             return result;
 
-        final Optional<com.ssomar.executableitems.executableitems.ExecutableItem> oOpt =
-                com.ssomar.executableitems.executableitems.ExecutableItemsManager.getInstance().getLoadedObjectWithID(itemId);
-        oOpt.ifPresent(executableItem -> result.itemStack = executableItem.buildItem(1, null, -147));
+        result.itemStack = com.willfp.eco.core.items.Items.lookup(itemId.toLowerCase()).getItem();
+
+        if (result.itemStack.getType() == Material.AIR)
+            result.itemStack = null;
 
         return result;
     }
-
     public @NotNull Collection<String> getItemTypes() {
         return Collections.emptyList();
     }

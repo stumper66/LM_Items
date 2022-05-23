@@ -24,10 +24,9 @@ public class MMOItems implements ItemsAPI {
 
     private boolean isInstalled;
     private final Set<String> supportedTypes;
-    final String[] deps = new String[] {"MMOItems", "MythicLib"};
 
     private void checkDeps(){
-        for (final String dep : deps){
+        for (final String dep : List.of(getName(), "MythicLib")){
             if (Bukkit.getPluginManager().getPlugin(dep) == null)
                 return;
         }

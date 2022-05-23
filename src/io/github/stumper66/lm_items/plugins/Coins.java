@@ -12,7 +12,7 @@ import java.util.Collections;
 @SuppressWarnings("unused")
 public class Coins implements ItemsAPI {
     public boolean getIsInstalled() {
-        return Bukkit.getPluginManager().getPlugin("coins") != null;
+        return Bukkit.getPluginManager().getPlugin(getName()) != null;
     }
 
     public @NotNull String getName(){
@@ -27,7 +27,7 @@ public class Coins implements ItemsAPI {
         final GetItemResult result = new GetItemResult(getIsInstalled());
         if (!result.pluginIsInstalled) return result;
 
-        final me.justeli.coins.Coins coins = (me.justeli.coins.Coins) Bukkit.getPluginManager().getPlugin("coins");
+        final me.justeli.coins.Coins coins = (me.justeli.coins.Coins) Bukkit.getPluginManager().getPlugin(getName());
         if (coins == null){
             result.pluginIsInstalled = false;
             return result;

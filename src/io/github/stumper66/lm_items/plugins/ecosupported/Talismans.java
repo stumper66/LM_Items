@@ -1,25 +1,25 @@
-package io.github.stumper66.lm_items.plugins;
+package io.github.stumper66.lm_items.plugins.ecosupported;
 
 import io.github.stumper66.lm_items.GetItemResult;
 import io.github.stumper66.lm_items.ItemsAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
-@SuppressWarnings("unused")
-public class EcoItems implements ItemsAPI {
-    public EcoItems() {
+public class Talismans implements ItemsAPI {
+    public Talismans(){
         checkDeps();
     }
 
     private boolean isInstalled;
-    final String[] deps = new String[] {"EcoItems", "Eco"};
 
     private void checkDeps(){
-        for (final String dep : deps){
+        for (final String dep : List.of(getName(), "eco")){
             if (Bukkit.getPluginManager().getPlugin(dep) == null)
                 return;
         }
@@ -32,7 +32,7 @@ public class EcoItems implements ItemsAPI {
     }
 
     public @NotNull String getName(){
-        return "EcoItems";
+        return "Talismans";
     }
 
     public @NotNull GetItemResult getItem(@Nullable final String type, @NotNull final String itemId) {
@@ -45,11 +45,17 @@ public class EcoItems implements ItemsAPI {
         if (!result.pluginIsInstalled)
             return result;
 
-        result.itemStack = com.willfp.eco.core.items.Items.lookup(itemId.toLowerCase()).getItem();
+        result.itemStack = com.willfp.eco.core.items.Items.lookup(
+                String.format("%s:%s", getName(), itemId.toLowerCase())
+        ).getItem();
+
+        if (result.itemStack.getType() == Material.AIR)
+            result.itemStack = null;
 
         return result;
     }
-    public @NotNull Collection<String> getItemTypes() {
+
+    public @NotNull Collection<String> getItemTypes(){
         return Collections.emptyList();
     }
 }

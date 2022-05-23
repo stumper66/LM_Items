@@ -1,5 +1,6 @@
 package io.github.stumper66.lm_items;
 
+import io.github.stumper66.lm_items.plugins.ecosupported.EcoItems;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,7 +33,7 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
     }
 
     void buildApiClasses(){
-        final List<String> names = List.of("Coins", "MMOItems", "ExecutableItems", "EcoItems");
+        final List<String> names = List.of("Coins", "MMOItems", "ExecutableItems");
 
         for (final String name : names) {
             ItemsAPI api = null;
@@ -46,6 +47,28 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
             if (api != null)
                 this.supportedPlugins.put(api.getName(), api);
         }
+
+        if (!this.supportedPlugins.containsKey("eco") || !this.supportedPlugins.get("eco").getIsInstalled())
+            return;
+
+        // eco plugin is required for all of the following:
+        final List<String> ecoSupported = List.of(
+                "EcoArmor", "EcoCrates", "EcoItems", "Reforges", "Talismans"
+        );
+
+        for (final String name : ecoSupported) {
+            ItemsAPI api = null;
+            try {
+                final Class<?> clazz = Class.forName("io.github.stumper66.lm_items.plugins.ecosupported." + name);
+                api = (ItemsAPI) clazz.getConstructor().newInstance();
+            } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException |
+                     InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            if (api != null)
+                this.supportedPlugins.put(api.getName(), api);
+        }
+
     }
 
     private void registerCommands(){
