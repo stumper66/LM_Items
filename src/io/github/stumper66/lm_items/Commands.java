@@ -43,7 +43,10 @@ public class Commands implements CommandExecutor, TabCompleter {
                 showSupportedPlugins();
                 break;
             case "types":
-                showTypes();
+                showTypesOrExtras(false);
+                break;
+            case "supported_extras":
+                showTypesOrExtras(true);
                 break;
             default:
                 showSyntax();
@@ -63,7 +66,7 @@ public class Commands implements CommandExecutor, TabCompleter {
     }
 
     public void showSyntax() {
-        sender.sendMessage("Usage: info | installed_plugins | supported_plugins | types");
+        sender.sendMessage("Usage: info | installed_plugins | supported_extras | supported_plugins | types");
     }
 
     private void showInfo(){
@@ -73,8 +76,9 @@ public class Commands implements CommandExecutor, TabCompleter {
                 "Created by stumper66, for use with LevelledMobs");
     }
 
-    private void showTypes(){
-        if (!hasPermissions("types")) return;
+    private void showTypesOrExtras(final boolean isExtras){
+        if (isExtras && !hasPermissions("supported_extras")) return;
+        else if (!isExtras && !hasPermissions("types")) return;
 
         if (args.length == 1){
             sender.sendMessage("Must specify plugin name");
@@ -93,16 +97,32 @@ public class Commands implements CommandExecutor, TabCompleter {
             return;
         }
 
-        final Collection<String> types = itemsAPI.getItemTypes();
-        if (types.isEmpty()){
-            sender.sendMessage("There are no types for this plugin known by LM_Items");
-            return;
-        }
-
         final StringBuilder sb = new StringBuilder();
-        for (final String typeName : types){
-            if (sb.length() > 0) sb.append(", ");
-            sb.append(typeName);
+
+        if (isExtras){
+            if (itemsAPI instanceof SupportsExtras){
+                final SupportsExtras supportsExtras = (SupportsExtras) itemsAPI;
+                for (final String name : supportsExtras.getSupportedExtras()){
+                    if (sb.length() > 0) sb.append(", ");
+                    sb.append(name);
+                }
+            }
+            else {
+                sender.sendMessage("This plugin doesn't have any supported extras");
+                return;
+            }
+        }
+        else {
+            final Collection<String> types = itemsAPI.getItemTypes();
+            if (types.isEmpty()) {
+                sender.sendMessage("There are no types for this plugin known by LM_Items");
+                return;
+            }
+
+            for (final String typeName : types){
+                if (sb.length() > 0) sb.append(", ");
+                sb.append(typeName);
+            }
         }
 
         sender.sendMessage(sb.toString());
@@ -141,7 +161,7 @@ public class Commands implements CommandExecutor, TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(final @NotNull CommandSender sender, final @NotNull Command command, final @NotNull String label, final @NotNull String @NotNull [] args){
         if (args.length <= 1)
-            return List.of("info", "installed_plugins", "supported_plugins", "types");
+            return List.of("info", "installed_plugins", "supported_plugins", "types", "supported_extras");
 
         if (args.length == 2 && "types".equalsIgnoreCase(args[0]) && sender.hasPermission("lm_items.types")){
             final List<String> plugins = new LinkedList<>();

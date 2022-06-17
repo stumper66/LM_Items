@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.Map;
 
 @SuppressWarnings("unused")
 public interface ItemsAPI {
@@ -11,9 +12,7 @@ public interface ItemsAPI {
 
     @NotNull String getName();
 
-    @NotNull GetItemResult getItem(final @Nullable String type, final @NotNull String itemId);
-
-    @NotNull GetItemResult getItem(final @Nullable String type, final @NotNull String itemId, final double amount);
+    @NotNull GetItemResult getItem(final @NotNull ExternalItemRequest itemRequest);
 
     @NotNull Collection<String> getItemTypes();
 }

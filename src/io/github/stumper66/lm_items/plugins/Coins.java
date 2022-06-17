@@ -1,10 +1,10 @@
 package io.github.stumper66.lm_items.plugins;
 
+import io.github.stumper66.lm_items.ExternalItemRequest;
 import io.github.stumper66.lm_items.GetItemResult;
 import io.github.stumper66.lm_items.ItemsAPI;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -19,11 +19,7 @@ public class Coins implements ItemsAPI {
         return "Coins";
     }
 
-    public @NotNull GetItemResult getItem(@Nullable String type, @NotNull String itemId) {
-        return getItem(type, itemId, 0.0);
-    }
-
-    public @NotNull GetItemResult getItem(@Nullable String type, @NotNull String itemId, double amount) {
+    public @NotNull GetItemResult getItem(final @NotNull ExternalItemRequest itemRequest){
         final GetItemResult result = new GetItemResult(getIsInstalled());
         if (!result.pluginIsInstalled) return result;
 
@@ -33,8 +29,8 @@ public class Coins implements ItemsAPI {
             return result;
         }
 
-        result.itemStack = amount != 0.0 ?
-                coins.getCreateCoin().dropped(amount) :
+        result.itemStack = itemRequest.amount != null ?
+                coins.getCreateCoin().dropped(itemRequest.amount) :
                 coins.getCreateCoin().dropped();
 
         return result;
