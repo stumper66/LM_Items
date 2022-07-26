@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ExecutableItemsHelper {
-    public static void setExtras(final @NotNull com.ssomar.testRecode.executableItems.NewExecutableItem ei, final @Nullable Map<String, Object> extras){
+    public static void setExtras(final @NotNull com.ssomar.executableitems.executableitems.ExecutableItem ei, final @Nullable Map<String, Object> extras){
         if (extras == null) return;
 
         com.ssomar.scoretestrecode.features.custom.hiders.Hiders hiders = null;

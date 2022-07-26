@@ -46,8 +46,8 @@ public class ExecutableItems implements ItemsAPI, SupportsExtras {
         if (!result.pluginIsInstalled)
             return result;
 
-        final Optional<com.ssomar.testRecode.executableItems.NewExecutableItem> oOpt =
-                com.ssomar.testRecode.executableItems.manager.NewExecutableItemsManager.getInstance()
+        final Optional<com.ssomar.executableitems.executableitems.ExecutableItem> oOpt =
+                com.ssomar.executableitems.executableitems.manager.ExecutableItemsManager.getInstance()
                         .getLoadedObjectWithID(itemRequest.itemId);
 
         oOpt.ifPresent(executableItem -> {
