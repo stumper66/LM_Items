@@ -46,11 +46,12 @@ public class ExecutableItems implements ItemsAPI, SupportsExtras {
         if (!result.pluginIsInstalled)
             return result;
 
+
         final Optional<com.ssomar.executableitems.executableitems.ExecutableItem> oOpt =
                 com.ssomar.executableitems.executableitems.manager.ExecutableItemsManager.getInstance()
                         .getLoadedObjectWithID(itemRequest.itemId);
 
-        oOpt.ifPresent(executableItem -> {
+        oOpt.ifPresent(executableItem-> {
             ExecutableItemsHelper.setExtras(executableItem, itemRequest.extras);
             final Optional<Integer> usageOpt = Optional.of(-147);
             final Optional<Player> playerOpt = Optional.empty();
