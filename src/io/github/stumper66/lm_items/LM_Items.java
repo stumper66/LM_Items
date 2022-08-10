@@ -32,7 +32,7 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
     }
 
     void buildApiClasses(){
-        final List<String> names = List.of("Coins", "MMOItems", "ExecutableItems", "EcoAPI", "CustomItems", "ItemsAdder");
+        final List<String> names = List.of("Coins", "MMOItems", "ExecutableItems", "EcoAPI", "CustomItems", "ItemsAdder", "MagicHealth");
 
         for (final String name : names) {
             ItemsAPI api = null;

@@ -1,6 +1,8 @@
 package io.github.stumper66.lm_items;
 
 import org.bukkit.Bukkit;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,6 +11,20 @@ import java.util.logging.Logger;
 
 public class Utils {
     public static final Logger logger = Bukkit.getLogger();
+    private static Boolean hasKyori;
+
+    private static boolean checkForKyori(){
+        if (hasKyori != null) return hasKyori;
+
+        try {
+            Class.forName("net.kyori.adventure.text.Component");
+            hasKyori = true;
+            return true;
+        } catch (ClassNotFoundException ignored) { }
+
+        hasKyori = false;
+        return false;
+    }
 
     public static @Nullable String getValueString(final @NotNull Map<String, Object> extras, final @NotNull String keyName){
         if (!extras.containsKey(keyName)) return null;
@@ -32,5 +48,17 @@ public class Utils {
         }
 
         return defaultValue;
+    }
+
+    @SuppressWarnings("deprecation")
+    public static @NotNull String getDisplayName(final @NotNull ItemStack itemStack){
+        if (checkForKyori()){
+            return PaperUtils.getDisplayName(itemStack);
+        }
+        else {
+            final ItemMeta itemMeta = itemStack.getItemMeta();
+            if (itemMeta == null) return "";
+            return itemMeta.getDisplayName();
+        }
     }
 }
