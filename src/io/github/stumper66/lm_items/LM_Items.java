@@ -40,7 +40,8 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
                 "CustomItems",
                 "ItemsAdder",
                 "MagicHealth",
-                "CustomCrafting"
+                "CustomCrafting",
+                "ExcellentCrates"
         );
 
         for (final String name : names) {

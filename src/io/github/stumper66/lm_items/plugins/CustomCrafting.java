@@ -55,6 +55,8 @@ public class CustomCrafting implements ItemsAPI {
 
         if (customItem != null) {
             result.itemStack = customItem.create(useAmount);
+            if (result.itemStack.getAmount() > result.itemStack.getMaxStackSize())
+                result.itemStack.setAmount(result.itemStack.getMaxStackSize());
         }
 
         return result;
