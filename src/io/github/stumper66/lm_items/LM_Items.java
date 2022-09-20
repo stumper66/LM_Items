@@ -19,19 +19,27 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
 
     public static LM_Items plugin;
     final Map<String, ItemsAPI> supportedPlugins;
+    private volatile boolean classesAreBuilding;
+    private boolean doneLoadingClasses;
 
     @Override
     public void onEnable() {
         final long startedTime = System.currentTimeMillis();
 
         registerCommands();
-        registerListeners();
 
-        Utils.logger.info(String.format("LM_Items start-up complete, took %s ms",
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, this::buildApiClasses, 0L);
+
+        Utils.logger.info(String.format("LM_Items: start-up complete, took %s ms",
                 (System.currentTimeMillis() - startedTime)));
     }
 
-    void buildApiClasses(){
+    public void buildApiClasses(){
+        if (classesAreBuilding || doneLoadingClasses) return;
+
+        classesAreBuilding = true;
+        Utils.logger.info("LM_Items: building API classes");
+
         final List<String> names = List.of(
                 "Coins",
                 "MMOItems",
@@ -53,8 +61,14 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
                      InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
-            if (api != null)
+            if (api != null) {
                 this.supportedPlugins.put(api.getName(), api);
+                if (api.getIsInstalled())
+                    Utils.logger.info("LM_Items: Discovered " + api.getName());
+            }
+
+            doneLoadingClasses = true;
+            classesAreBuilding = false;
         }
 
         if (!this.supportedPlugins.containsKey("eco") || !this.supportedPlugins.get("eco").getIsInstalled())
@@ -83,13 +97,9 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
     private void registerCommands(){
         final PluginCommand cmd = getCommand("lm_items");
         if (cmd == null)
-            Utils.logger.warning("Command &b/lm_items&7 is unavailable, is it not registered in plugin.yml?");
+            Utils.logger.warning("LM_Items: Command &b/lm_items&7 is unavailable, is it not registered in plugin.yml?");
         else
             cmd.setExecutor(new Commands(this));
-    }
-
-    private void registerListeners(){
-        Bukkit.getPluginManager().registerEvents(new EventHandlers(this), this);
     }
 
     @Override
