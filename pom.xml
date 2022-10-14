@@ -6,7 +6,7 @@
 
     <groupId>io.github.stumper66</groupId>
     <artifactId>LM_Items</artifactId>
-    <version>1.2.8</version>
+    <version>1.2.9</version>
     <packaging>jar</packaging>
 
     <name>LM_Items</name>
@@ -136,7 +136,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.19-R0.1-SNAPSHOT</version>
+            <version>1.19.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -199,7 +199,7 @@
             <!-- https://www.spigotmc.org/resources/custom-items-free-executable-items.77578/ -->
             <groupId>nomaven</groupId>
             <artifactId>ExecutableItems</artifactId>
-            <version>5.1.1</version>
+            <version>5.5.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -207,7 +207,7 @@
             <!-- Used by ExecutableItems -->
             <groupId>nomaven</groupId>
             <artifactId>SCore</artifactId>
-            <version>2.1.1</version>
+            <version>3.5.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
