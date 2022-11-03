@@ -1,6 +1,7 @@
 package io.github.stumper66.lm_items.plugins;
 
 
+import dev.lone.itemsadder.api.CustomStack;
 import io.github.stumper66.lm_items.ExternalItemRequest;
 import io.github.stumper66.lm_items.GetItemResult;
 import io.github.stumper66.lm_items.ItemsAPI;
@@ -29,18 +30,15 @@ public class ItemsAdder implements ItemsAPI, SupportsExtras {
         final GetItemResult result = new GetItemResult(getIsInstalled());
         if (!result.pluginIsInstalled) return result;
 
-        final List<dev.lone.itemsadder.api.CustomStack> items =
-                dev.lone.itemsadder.api.ItemsAdder.getAllItems(itemRequest.itemId);
-        if (items == null || items.isEmpty())
-            return result;
+        final CustomStack stack = CustomStack.getInstance(itemRequest.itemId);
+        if (stack == null) return result;
 
         final int amount = itemRequest.amount == null ?
                 1 :
                 (int)Math.round(itemRequest.amount);
 
-        final dev.lone.itemsadder.api.CustomStack firstItem = items.get(0);
-        setExtras(firstItem, itemRequest.extras);
-        result.itemStack = firstItem.getItemStack();
+        setExtras(stack, itemRequest.extras);
+        result.itemStack = stack.getItemStack();
         if (amount > 1)
             result.itemStack.setAmount(amount);
 

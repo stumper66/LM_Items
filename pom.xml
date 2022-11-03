@@ -134,9 +134,23 @@
 
     <dependencies>
         <dependency>
+            <!-- https://www.spigotmc.org/resources/prorpgitems-most-powerful-custom-items-generator-gems-repair-drops-sets-and-more.99713/ -->
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
             <version>1.19.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <!-- https://www.spigotmc.org/resources/promccore.93608/ -->
+            <groupId>nomaven</groupId>
+            <artifactId>promccore</artifactId>
+            <version>1.0.3.9</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>nomaven</groupId>
+            <artifactId>prorpgitems</artifactId>
+            <version>1.0.3.16</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
