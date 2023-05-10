@@ -3,6 +3,8 @@ package io.github.stumper66.lm_items.plugins;
 import io.github.stumper66.lm_items.ExternalItemRequest;
 import io.github.stumper66.lm_items.GetItemResult;
 import io.github.stumper66.lm_items.ItemsAPI;
+import io.github.stumper66.lm_items.SupportsExtras;
+import io.github.stumper66.lm_items.Utils;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +16,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 @SuppressWarnings("unused")
-public class MMOItems implements ItemsAPI {
+public class MMOItems implements ItemsAPI, SupportsExtras {
     public MMOItems() {
         checkDeps();
         this.supportedTypes = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
@@ -48,9 +50,21 @@ public class MMOItems implements ItemsAPI {
         if (!result.pluginIsInstalled)
             return result;
 
-        final net.Indyuce.mmoitems.MMOItems mmoItems = net.Indyuce.mmoitems.MMOItems.plugin;
+        final net.Indyuce.mmoitems.MMOItems plugin = net.Indyuce.mmoitems.MMOItems.plugin;
 
-        result.itemStack = mmoItems.getItem(itemRequest.itemType, itemRequest.itemId);
+        net.Indyuce.mmoitems.api.item.mmoitem.MMOItem mmoitem;
+        if (itemRequest.extras != null && itemRequest.extras.containsKey("ItemLevel")){
+            final int itemLevel = Utils.getIntValue(itemRequest.extras, "ItemLevel", 1);
+            mmoitem = plugin.getMMOItem(plugin.getTypes().get(itemRequest.itemType), itemRequest.itemId, itemLevel, null);
+        }
+        else{
+            mmoitem = plugin.getMMOItem(plugin.getTypes().get(itemRequest.itemType), itemRequest.itemId);
+        }
+
+        if (mmoitem == null) return result;
+
+        result.itemStack = mmoitem.newBuilder().build();
+
         if (itemRequest.amount != null && result.itemStack != null) {
             final double useAmount = itemRequest.amount;
             result.itemStack.setAmount((int) useAmount);
@@ -75,5 +89,9 @@ public class MMOItems implements ItemsAPI {
             return this.supportedTypes;
         else
             return Collections.emptyList();
+    }
+
+    public @NotNull Collection<String> getSupportedExtras(){
+        return List.of("ItemLevel");
     }
 }

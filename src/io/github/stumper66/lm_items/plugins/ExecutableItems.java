@@ -52,7 +52,8 @@ public class ExecutableItems implements ItemsAPI, SupportsExtras {
 
         oOpt.ifPresent(executableItem-> {
             ExecutableItemsHelper.setExtras(executableItem, itemRequest.extras);
-            final Optional<Integer> usageOpt = Optional.of(-147);
+            //final Optional<Integer> usageOpt = Optional.of(-147);
+            final Optional<Integer> usageOpt = Optional.empty();
             final Optional<Player> playerOpt = Optional.empty();
             double useAmount = itemRequest.amount != null ? itemRequest.amount : 1.0;
             result.itemStack = executableItem.buildItem((int)useAmount, usageOpt, playerOpt);

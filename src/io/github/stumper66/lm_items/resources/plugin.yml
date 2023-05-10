@@ -26,7 +26,6 @@ commands:
   lm_items:
     description: Manage LM Items
     aliases: [ lmi ]
-    usage:
 
 permissions:
   lm_items.*:
