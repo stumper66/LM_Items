@@ -37,15 +37,17 @@ public class Utils {
     }
 
     public static int getIntValue(final @NotNull Map<String, Object> extras, final @NotNull String keyName, final int defaultValue){
-        if (!extras.containsKey(keyName))
+        if (!extras.containsKey(keyName)) {
             return defaultValue;
+        }
 
         final Object temp = extras.get(keyName);
-        if (temp instanceof Integer)
-            return (int) temp;
-        else if (temp instanceof Double){
-            return (int)((double) temp);
+        if (temp == null) return defaultValue;
+
+        try{
+            return Integer.parseInt(temp.toString());
         }
+        catch (Exception ignored) {}
 
         return defaultValue;
     }
