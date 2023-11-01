@@ -49,7 +49,8 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
                 "ItemsAdder",
                 "MagicHealth",
                 "CustomCrafting",
-                "ExcellentCrates"
+                "ExcellentCrates",
+                "HeadDatabase"
         );
 
         for (final String name : names) {
