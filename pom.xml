@@ -6,7 +6,7 @@
 
     <groupId>io.github.stumper66</groupId>
     <artifactId>LM_Items</artifactId>
-    <version>1.2.12</version>
+    <version>1.2.13</version>
     <packaging>jar</packaging>
 
     <name>LM_Items</name>
@@ -133,7 +133,7 @@
             <!-- https://www.spigotmc.org/resources/prorpgitems-most-powerful-custom-items-generator-gems-repair-drops-sets-and-more.99713/ -->
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.19.4-R0.1-SNAPSHOT</version>
+            <version>1.20.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -151,16 +151,17 @@
         </dependency>
         <dependency>
             <!-- https://github.com/nulli0n/NexEngine-spigot -->
+            <!-- used by ExcellentCrates -->
             <groupId>nomaven</groupId>
             <artifactId>NexEngine</artifactId>
-            <version>2.2.4</version>
+            <version>2.2.12</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <!-- https://www.spigotmc.org/resources/excellentcrates-advanced-custom-crates.48732/ -->
             <groupId>nomaven</groupId>
             <artifactId>ExcellentCrates</artifactId>
-            <version>4.0.5</version>
+            <version>5.0.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

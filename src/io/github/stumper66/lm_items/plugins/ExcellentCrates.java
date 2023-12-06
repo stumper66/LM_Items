@@ -43,9 +43,9 @@ public class ExcellentCrates implements ItemsAPI {
             useAmount = (int)(double)itemRequest.amount;
         }
 
-        if (itemRequest.itemType == null || itemRequest.itemType.length() == 0 || "key".equalsIgnoreCase(itemRequest.itemType))
+        if (itemRequest.itemType == null || itemRequest.itemType.isEmpty() || "key".equalsIgnoreCase(itemRequest.itemType))
         {
-            final su.nightexpress.excellentcrates.api.crate.ICrateKey key =
+            final su.nightexpress.excellentcrates.key.CrateKey key =
                     su.nightexpress.excellentcrates.ExcellentCratesAPI.getKeyManager().getKeyById(itemRequest.itemId);
 
             if (key != null) {
@@ -55,11 +55,11 @@ public class ExcellentCrates implements ItemsAPI {
             }
         }
         else if ("crate".equalsIgnoreCase(itemRequest.itemType)){
-            final su.nightexpress.excellentcrates.api.crate.ICrate crate =
+            final su.nightexpress.excellentcrates.crate.impl.Crate crate =
                     su.nightexpress.excellentcrates.ExcellentCratesAPI.getCrateManager().getCrateById(itemRequest.itemId);
 
             if (crate != null) {
-                crate.save();
+                crate.onSave();
                 result.itemStack = crate.getItem();
 
                 if (useAmount > 1)
