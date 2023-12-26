@@ -6,7 +6,7 @@
 
     <groupId>io.github.stumper66</groupId>
     <artifactId>LM_Items</artifactId>
-    <version>1.2.13</version>
+    <version>1.2.14</version>
     <packaging>jar</packaging>
 
     <name>LM_Items</name>
@@ -129,6 +129,13 @@
     </repositories>
 
     <dependencies>
+        <!-- https://www.spigotmc.org/resources/itemedit-1-8-x-1-20-x.40993/ -->
+        <dependency>
+            <groupId>nomaven</groupId>
+            <artifactId>ItemEdit</artifactId>
+            <version>3.1.5</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <!-- https://www.spigotmc.org/resources/prorpgitems-most-powerful-custom-items-generator-gems-repair-drops-sets-and-more.99713/ -->
             <groupId>io.papermc.paper</groupId>
