@@ -6,7 +6,7 @@
 
     <groupId>io.github.stumper66</groupId>
     <artifactId>LM_Items</artifactId>
-    <version>1.2.14</version>
+    <version>1.2.15</version>
     <packaging>jar</packaging>
 
     <name>LM_Items</name>
@@ -129,8 +129,15 @@
     </repositories>
 
     <dependencies>
-        <!-- https://www.spigotmc.org/resources/itemedit-1-8-x-1-20-x.40993/ -->
         <dependency>
+            <!-- https://www.spigotmc.org/resources/%E2%98%84%EF%B8%8F-oraxen-add-items-blocks-armors-hats-food-furnitures-plants-and-gui-1-18-1-20-4.72448/ -->
+            <groupId>nomaven</groupId>
+            <artifactId>Oraxen</artifactId>
+            <version>1.166.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <!-- https://www.spigotmc.org/resources/itemedit-1-8-x-1-20-x.40993/ -->
             <groupId>nomaven</groupId>
             <artifactId>ItemEdit</artifactId>
             <version>3.1.5</version>

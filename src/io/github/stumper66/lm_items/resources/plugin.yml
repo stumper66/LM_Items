@@ -16,6 +16,8 @@ softdepend:
   - CustomCrafting
   - WolfyUtilities
   - ExcellentCrates
+  - ItemEdit
+  - Oraxen
 api-version: '1.13'
 load: POSTWORLD
 author: stumper66
