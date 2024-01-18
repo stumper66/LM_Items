@@ -6,7 +6,7 @@
 
     <groupId>io.github.stumper66</groupId>
     <artifactId>LM_Items</artifactId>
-    <version>1.2.15</version>
+    <version>1.3.0</version>
     <packaging>jar</packaging>
 
     <name>LM_Items</name>
@@ -52,7 +52,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -65,7 +65,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
+                <version>3.6.3</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -78,7 +78,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
@@ -111,6 +111,10 @@
 
     <repositories>
         <repository>
+            <id>maven</id>
+            <url>https://mvnrepository.com/artifact/org.apache.maven.plugins/</url>
+        </repository>
+        <repository>
             <id>papermc</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
@@ -125,6 +129,10 @@
         <repository>
             <id>phoenix</id>
             <url>https://nexus.phoenixdevt.fr/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>auxilor</id>
+            <url>https://repo.auxilor.io/repository/maven-public/</url>
         </repository>
     </repositories>
 
@@ -215,7 +223,7 @@
         </dependency>
         <dependency>
             <!-- https://github.com/Auxilor/eco -->
-            <groupId>nomaven</groupId>
+            <groupId>com.willfp</groupId>
             <artifactId>eco</artifactId>
             <version>6.57.2</version>
             <scope>provided</scope>
@@ -239,7 +247,7 @@
         <dependency>
             <groupId>net.Indyuce</groupId>
             <artifactId>MMOItems-API</artifactId>
-            <version>6.9.2-SNAPSHOT</version>
+            <version>6.9.5-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -248,7 +256,7 @@
             <!-- Used by MMOItems -->
             <groupId>nomaven</groupId>
             <artifactId>MythicLib</artifactId>
-            <version>1.0.19</version>
+            <version>1.3.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

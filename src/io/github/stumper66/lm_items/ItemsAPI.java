@@ -13,4 +13,8 @@ public interface ItemsAPI {
     @NotNull GetItemResult getItem(final @NotNull ExternalItemRequest itemRequest);
 
     @NotNull Collection<String> getItemTypes();
+
+    default int apiVersion(){
+        return 2;
+    }
 }

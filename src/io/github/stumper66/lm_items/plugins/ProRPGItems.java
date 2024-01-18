@@ -36,7 +36,7 @@ public class ProRPGItems implements ItemsAPI {
     }
 
     public @NotNull GetItemResult getItem(@NotNull ExternalItemRequest itemRequest) {
-        return null;
+        return new GetItemResult();
     }
 
     public @NotNull Collection<String> getItemTypes() {

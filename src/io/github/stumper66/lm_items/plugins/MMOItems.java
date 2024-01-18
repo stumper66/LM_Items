@@ -5,15 +5,21 @@ import io.github.stumper66.lm_items.GetItemResult;
 import io.github.stumper66.lm_items.ItemsAPI;
 import io.github.stumper66.lm_items.SupportsExtras;
 import io.github.stumper66.lm_items.Utils;
+import net.Indyuce.mmoitems.api.item.build.MMOItemBuilder;
+import net.Indyuce.mmoitems.api.item.mmoitem.MMOItem;
+import net.Indyuce.mmoitems.api.item.template.MMOItemTemplate;
 import org.bukkit.Bukkit;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("unused")
 public class MMOItems implements ItemsAPI, SupportsExtras {
@@ -50,27 +56,148 @@ public class MMOItems implements ItemsAPI, SupportsExtras {
         if (!result.pluginIsInstalled)
             return result;
 
-        final net.Indyuce.mmoitems.MMOItems plugin = net.Indyuce.mmoitems.MMOItems.plugin;
+        final List<ItemStack> items = processItems(itemRequest);
+        int minItems;
+        int maxItems;
 
-        net.Indyuce.mmoitems.api.item.mmoitem.MMOItem mmoitem;
-        if (itemRequest.extras != null && itemRequest.extras.containsKey("ItemLevel")){
-            final int itemLevel = Utils.getIntValue(itemRequest.extras, "ItemLevel", 1);
-            mmoitem = plugin.getMMOItem(plugin.getTypes().get(itemRequest.itemType), itemRequest.itemId, itemLevel, null);
+        minItems = Math.max(itemRequest.minItems, 1);
+        maxItems = Math.max(itemRequest.maxItems, minItems);
+
+        for (final ItemStack item : items) {
+            if (itemRequest.amount != null) {
+                final double useAmount = itemRequest.amount;
+                item.setAmount((int) useAmount);
+            }
         }
-        else{
-            mmoitem = plugin.getMMOItem(plugin.getTypes().get(itemRequest.itemType), itemRequest.itemId);
-        }
 
-        if (mmoitem == null) return result;
+        if (!items.isEmpty()){
+            if (items.size() > 1) {
+                Collections.shuffle(items);
+                minItems = Math.min(minItems, items.size());
+                maxItems = Math.min(maxItems, items.size());
 
-        result.itemStack = mmoitem.newBuilder().build();
+                final int numberToUse = minItems != maxItems ?
+                        ThreadLocalRandom.current().nextInt(minItems, maxItems + 1) :
+                        maxItems;
 
-        if (itemRequest.amount != null && result.itemStack != null) {
-            final double useAmount = itemRequest.amount;
-            result.itemStack.setAmount((int) useAmount);
+                result.itemStacks = new LinkedList<>();
+                int count = 0;
+                for (final ItemStack itemStack : items){
+                    result.itemStacks.add(itemStack);
+                    count++;
+                    if (count >= numberToUse) break;
+                }
+            }
+            // this is for backwards compatibility
+            result.itemStack = items.get(0);
         }
 
         return result;
+    }
+
+    private @NotNull List<ItemStack> processItems(final @NotNull ExternalItemRequest itemRequest){
+        final List<ItemStack> results = new LinkedList<>();
+        final net.Indyuce.mmoitems.MMOItems plugin = net.Indyuce.mmoitems.MMOItems.plugin;
+        boolean getSingleItem = true;
+        Integer itemLevel = null;
+        if (itemRequest.extras != null && itemRequest.extras.containsKey("ItemLevel")){
+            itemLevel = Utils.getIntValue(itemRequest.extras, "ItemLevel", 1);
+        }
+
+        if (itemRequest.getMultipleItems){
+            getSingleItem = false;
+            final net.Indyuce.mmoitems.api.Type itemType = plugin.getTypes().get(itemRequest.itemType);
+            if (itemType == null){
+                return results;
+            }
+
+            final Collection<MMOItemTemplate> col = plugin.getTemplates().getTemplates(itemType);
+            for (final MMOItemTemplate mmoItemTemplate : col){
+                MMOItemBuilder builder = itemLevel != null ?
+                        mmoItemTemplate.newBuilder(itemLevel, null) :
+                        mmoItemTemplate.newBuilder();
+
+                final MMOItem mmoItem = builder.build();
+                if (checkFilterCriteria(mmoItem.getId(), itemRequest)) {
+                    final ItemStack result = mmoItem.newBuilder().build();
+                    if (result != null) results.add(result);
+                }
+            }
+        }
+
+
+        if (getSingleItem){
+            MMOItem mmoitem;
+            if (itemLevel != null){
+                mmoitem = plugin.getMMOItem(plugin.getTypes().get(itemRequest.itemType), itemRequest.itemId, itemLevel, null);
+            }
+            else{
+                mmoitem = plugin.getMMOItem(plugin.getTypes().get(itemRequest.itemType), itemRequest.itemId);
+            }
+
+            if (mmoitem != null) results.add(mmoitem.newBuilder().build());
+        }
+
+        return results;
+    }
+
+    private boolean checkFilterCriteria(final @NotNull String itemId, final @NotNull ExternalItemRequest itemRequest){
+        if ((itemRequest.excludedList == null || itemRequest.excludedList.isEmpty()) &&
+                (itemRequest.allowedList == null || itemRequest.allowedList.isEmpty())) return true;
+
+        if (itemRequest.excludedList != null){
+            for (final String excludeWord : itemRequest.excludedList){
+                if (excludeWord.contains("*")){
+                    // wildcard search
+                    final String itemIdLower = itemId.toLowerCase();
+                    if (checkWildcardMatch(itemIdLower, excludeWord.toLowerCase()))
+                        return false;
+                }
+                else{
+                    if (itemId.equalsIgnoreCase(excludeWord)) return false;
+                }
+            }
+        }
+
+        if (itemRequest.allowedList != null){
+            for (final String allowedWord : itemRequest.allowedList){
+                if (allowedWord.contains("*")){
+                    // wildcard search
+                    final String itemIdLower = itemId.toLowerCase();
+                    if (!checkWildcardMatch(itemIdLower, allowedWord.toLowerCase()))
+                        return true;
+                }
+                else{
+                    if (itemId.equalsIgnoreCase(allowedWord)) return true;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private boolean checkWildcardMatch(final @NotNull String itemIdL, final @NotNull String criteriaL){
+        boolean hasStart = false;
+        boolean hasEnd = false;
+        String searchWord = criteriaL;
+        if (criteriaL.startsWith("*")){
+            hasStart = true;
+            searchWord = searchWord.substring(1);
+        }
+        if (criteriaL.endsWith("*")){
+            hasEnd = true;
+            searchWord = searchWord.substring(0, searchWord.length() - 1);
+        }
+
+        if (hasStart && hasEnd){
+            return !itemIdL.contains(searchWord);
+        }
+        else if (hasStart){
+            return !itemIdL.endsWith(searchWord);
+        }
+        else {
+            return !itemIdL.startsWith(searchWord);
+        }
     }
 
     private void buildSupportedItemTypes(){
