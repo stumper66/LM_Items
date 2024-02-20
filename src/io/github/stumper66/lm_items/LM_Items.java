@@ -52,7 +52,8 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
                 "ExcellentCrates",
                 "HeadDatabase",
                 "ItemEdit",
-                "Oraxen"
+                "Oraxen",
+                "MythicMobs"
         );
 
         for (final String name : names) {

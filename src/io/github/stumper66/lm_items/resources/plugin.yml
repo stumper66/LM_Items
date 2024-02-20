@@ -18,6 +18,7 @@ softdepend:
   - ExcellentCrates
   - ItemEdit
   - Oraxen
+  - MythicMobs
 api-version: '1.13'
 load: POSTWORLD
 author: stumper66
