@@ -4,16 +4,17 @@ import io.github.stumper66.lm_items.ExternalItemRequest;
 import io.github.stumper66.lm_items.GetItemResult;
 import io.github.stumper66.lm_items.ItemsAPI;
 import io.lumine.mythic.bukkit.MythicBukkit;
+import io.lumine.mythic.bukkit.adapters.BukkitItemStack;
 import io.lumine.mythic.core.items.MythicItem;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Optional;
 
-@SuppressWarnings({"unused", "deprecation"})
+@SuppressWarnings("unused")
 public class MythicMobs implements ItemsAPI {
     @Override
     public boolean getIsInstalled()  {
@@ -37,33 +38,15 @@ public class MythicMobs implements ItemsAPI {
             return result;
         }
 
-        if (item.get().getCachedMenuItem() == null)
-            item.get().buildItemCache();
-        result.itemStack = item.get().getCachedMenuItem();
-
-        if (result.itemStack == null) return result;
-
-        final List<String> lore = result.itemStack.getLore();
-
-        if (lore != null) {
-            boolean madeChanges = false;
-            for (int i = lore.size() - 1; i >= 0; i--) {
-                if (lore.get(i).contains("Left-Click to get Item") ||
-                        lore.get(i).contains("Right-Click to Edit")) {
-                    lore.remove(i);
-                    madeChanges = true;
-                }
-            }
-
-            if (madeChanges) result.itemStack.setLore(lore);
-        }
-
         final int amount = itemRequest.amount == null ?
                 1 :
                 (int) Math.round(itemRequest.amount);
 
-        if (amount > 1)
-            result.itemStack.setAmount(amount);
+        result.itemStacks = new LinkedList<>();
+        for (int i = 0; i < amount; i++) {
+            result.itemStacks.add((new BukkitItemStack(itemRequest.itemId)).build());
+        }
+
         return result;
     }
 
