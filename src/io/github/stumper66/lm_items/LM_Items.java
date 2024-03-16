@@ -53,7 +53,8 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
                 "HeadDatabase",
                 "ItemEdit",
                 "Oraxen",
-                "MythicMobs"
+                "MythicMobs",
+                "CombatWeaponryPlusImpl"
         );
 
         for (final String name : names) {
