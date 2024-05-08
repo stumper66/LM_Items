@@ -26,7 +26,7 @@ public class Utils {
         return false;
     }
 
-    public static @Nullable String getValueString(final @NotNull Map<String, Object> extras, final @NotNull String keyName){
+    public static @Nullable String getStringValue(final @NotNull Map<String, Object> extras, final @NotNull String keyName){
         if (!extras.containsKey(keyName)) return null;
 
         final Object temp = extras.get(keyName);

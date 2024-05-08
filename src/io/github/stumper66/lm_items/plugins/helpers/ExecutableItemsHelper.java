@@ -30,23 +30,23 @@ public class ExecutableItemsHelper {
         if (durability > -1)
             ei.getDurability().setValue(Optional.of(durability));
 
-        if ("true".equalsIgnoreCase(Utils.getValueString(extras, "HideUsage"))) {
+        if ("true".equalsIgnoreCase(Utils.getStringValue(extras, "HideUsage"))) {
             hiders = new com.ssomar.score.features.custom.hiders.Hiders(ei);
             hiders.getHideUsage().setValue(true);
         }
-        if ("true".equalsIgnoreCase(Utils.getValueString(extras, "HideEnchantments"))) {
+        if ("true".equalsIgnoreCase(Utils.getStringValue(extras, "HideEnchantments"))) {
             if (hiders == null) hiders = new com.ssomar.score.features.custom.hiders.Hiders(ei);
             hiders.getHideEnchantments().setValue(true);
         }
-        if ("true".equalsIgnoreCase(Utils.getValueString(extras, "HideAttributes"))) {
+        if ("true".equalsIgnoreCase(Utils.getStringValue(extras, "HideAttributes"))) {
             if (hiders == null) hiders = new com.ssomar.score.features.custom.hiders.Hiders(ei);
             hiders.getHideAttributes().setValue(true);
         }
-        if ("true".equalsIgnoreCase(Utils.getValueString(extras, "HideUnbreakable"))) {
+        if ("true".equalsIgnoreCase(Utils.getStringValue(extras, "HideUnbreakable"))) {
             if (hiders == null) hiders = new com.ssomar.score.features.custom.hiders.Hiders(ei);
             hiders.getHideUnbreakable().setValue(true);
         }
-        if ("true".equalsIgnoreCase(Utils.getValueString(extras, "HidePotionEffects"))) {
+        if ("true".equalsIgnoreCase(Utils.getStringValue(extras, "HidePotionEffects"))) {
             if (hiders == null) hiders = new com.ssomar.score.features.custom.hiders.Hiders(ei);
             hiders.getHidePotionEffects().setValue(true);
         }

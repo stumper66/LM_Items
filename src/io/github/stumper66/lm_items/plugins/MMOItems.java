@@ -5,9 +5,13 @@ import io.github.stumper66.lm_items.GetItemResult;
 import io.github.stumper66.lm_items.ItemsAPI;
 import io.github.stumper66.lm_items.SupportsExtras;
 import io.github.stumper66.lm_items.Utils;
+import net.Indyuce.mmoitems.ItemStats;
+import net.Indyuce.mmoitems.api.ItemTier;
 import net.Indyuce.mmoitems.api.item.build.MMOItemBuilder;
 import net.Indyuce.mmoitems.api.item.mmoitem.MMOItem;
 import net.Indyuce.mmoitems.api.item.template.MMOItemTemplate;
+import net.Indyuce.mmoitems.manager.TierManager;
+import net.Indyuce.mmoitems.stat.data.random.RandomStatData;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -98,10 +102,15 @@ public class MMOItems implements ItemsAPI, SupportsExtras {
     private @NotNull List<ItemStack> processItems(final @NotNull ExternalItemRequest itemRequest){
         final List<ItemStack> results = new LinkedList<>();
         final net.Indyuce.mmoitems.MMOItems plugin = net.Indyuce.mmoitems.MMOItems.plugin;
+        final TierManager tiers = net.Indyuce.mmoitems.MMOItems.plugin.getTiers();
         boolean getSingleItem = true;
-        Integer itemLevel = null;
-        if (itemRequest.extras != null && itemRequest.extras.containsKey("ItemLevel")){
-            itemLevel = Utils.getIntValue(itemRequest.extras, "ItemLevel", 1);
+        int itemLevel = 0;
+        String itemTier = null;
+        if (itemRequest.extras != null){
+            if (itemRequest.extras.containsKey("ItemLevel"))
+                itemLevel = Utils.getIntValue(itemRequest.extras, "ItemLevel", 0);
+            if (itemRequest.extras.containsKey("ItemTier"))
+                itemTier = Utils.getStringValue(itemRequest.extras, "ItemTier");
         }
 
         if (itemRequest.getMultipleItems){
@@ -113,11 +122,12 @@ public class MMOItems implements ItemsAPI, SupportsExtras {
 
             final Collection<MMOItemTemplate> col = plugin.getTemplates().getTemplates(itemType);
             for (final MMOItemTemplate mmoItemTemplate : col){
-                MMOItemBuilder builder = itemLevel != null ?
-                        mmoItemTemplate.newBuilder(itemLevel, null) :
-                        mmoItemTemplate.newBuilder();
+                final ItemTier useTier = itemTier != null ?
+                        tiers.get(itemTier) : generateRandomTier(tiers);
 
+                final MMOItemBuilder builder = mmoItemTemplate.newBuilder(itemLevel, useTier);
                 final MMOItem mmoItem = builder.build();
+
                 if (checkFilterCriteria(mmoItem.getId(), itemRequest)) {
                     final ItemStack result = mmoItem.newBuilder().build();
                     if (result != null) results.add(result);
@@ -125,20 +135,41 @@ public class MMOItems implements ItemsAPI, SupportsExtras {
             }
         }
 
-
         if (getSingleItem){
-            MMOItem mmoitem;
-            if (itemLevel != null){
-                mmoitem = plugin.getMMOItem(plugin.getTypes().get(itemRequest.itemType), itemRequest.itemId, itemLevel, null);
-            }
-            else{
-                mmoitem = plugin.getMMOItem(plugin.getTypes().get(itemRequest.itemType), itemRequest.itemId);
-            }
+            final ItemTier useTier = itemTier != null ?
+                    tiers.get(itemTier) : generateRandomTier(tiers);
+
+            final MMOItem mmoitem = plugin.getMMOItem(
+                    plugin.getTypes().get(itemRequest.itemType),
+                    itemRequest.itemId,
+                    itemLevel,
+                    useTier
+            );
 
             if (mmoitem != null) results.add(mmoitem.newBuilder().build());
         }
 
         return results;
+    }
+
+    private ItemTier generateRandomTier(final @NotNull TierManager tiers) {
+        double total = 0.0;
+
+        for (ItemTier it : tiers.getAll()) {
+            total += it.getGenerationChance();
+        }
+
+        double rand = Math.random() * total;
+
+        for (ItemTier tier: tiers.getAll()) {
+            if (rand < tier.getGenerationChance()) {
+                return tier;
+            }
+
+            rand -= tier.getGenerationChance();
+        }
+
+        return tiers.get("COMMON");
     }
 
     private boolean checkFilterCriteria(final @NotNull String itemId, final @NotNull ExternalItemRequest itemRequest){
