@@ -74,6 +74,6 @@ public class ExcellentCrates implements ItemsAPI {
     }
 
     public @NotNull Collection<String> getItemTypes() {
-        return List.of("create", "key");
+        return List.of("crate", "key");
     }
 }

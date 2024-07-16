@@ -38,7 +38,7 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
         if (classesAreBuilding || doneLoadingClasses) return;
 
         classesAreBuilding = true;
-        Utils.logger.info("LM_Items: building API classes");
+        Utils.logger.info("LM_Items: Building API classes");
 
         final List<String> names = List.of(
                 "Coins",

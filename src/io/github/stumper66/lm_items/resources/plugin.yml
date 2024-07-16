@@ -20,11 +20,12 @@ softdepend:
   - Oraxen
   - MythicMobs
   - CompatWeaponryPlus
-api-version: '1.13'
+api-version: '1.16'
 load: POSTWORLD
 author: stumper66
 description: ${project.description}
-website: 'https://github.com/lokka30/LevelledMobs/wiki'
+website: 'https://github.com/stumper66/LM_Items'
+folia-supported: true
 
 commands:
   lm_items:
