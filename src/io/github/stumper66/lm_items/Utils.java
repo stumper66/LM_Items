@@ -52,6 +52,38 @@ public class Utils {
         return defaultValue;
     }
 
+    public static @Nullable Integer getIntNValue(final @NotNull Map<String, Object> extras, final @NotNull String keyName){
+        if (!extras.containsKey(keyName)) {
+            return null;
+        }
+
+        final Object temp = extras.get(keyName);
+        if (temp == null) return null;
+
+        try{
+            return Integer.parseInt(temp.toString());
+        }
+        catch (Exception ignored) {}
+
+        return null;
+    }
+
+    public static @Nullable Double getDblNValue(final @NotNull Map<String, Object> extras, final @NotNull String keyName){
+        if (!extras.containsKey(keyName)) {
+            return null;
+        }
+
+        final Object temp = extras.get(keyName);
+        if (temp == null) return null;
+
+        try{
+            return Double.parseDouble(temp.toString());
+        }
+        catch (Exception ignored) {}
+
+        return null;
+    }
+
     @SuppressWarnings("deprecation")
     public static @NotNull String getDisplayName(final @NotNull ItemStack itemStack){
         if (checkForKyori()){

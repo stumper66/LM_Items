@@ -18,7 +18,7 @@ public class ExcellentCrates implements ItemsAPI {
     private boolean isInstalled;
 
     private void checkDeps(){
-        for (final String dep : List.of(getName(), "NexEngine")){
+        for (final String dep : List.of(getName(), "nightcore")){
             if (Bukkit.getPluginManager().getPlugin(dep) == null)
                 return;
         }
@@ -46,7 +46,7 @@ public class ExcellentCrates implements ItemsAPI {
         if (itemRequest.itemType == null || itemRequest.itemType.isEmpty() || "key".equalsIgnoreCase(itemRequest.itemType))
         {
             final su.nightexpress.excellentcrates.key.CrateKey key =
-                    su.nightexpress.excellentcrates.ExcellentCratesAPI.getKeyManager().getKeyById(itemRequest.itemId);
+                    su.nightexpress.excellentcrates.CratesAPI.getKeyManager().getKeyById(itemRequest.itemId);
 
             if (key != null) {
                 result.itemStack = key.getItem();
@@ -56,10 +56,10 @@ public class ExcellentCrates implements ItemsAPI {
         }
         else if ("crate".equalsIgnoreCase(itemRequest.itemType)){
             final su.nightexpress.excellentcrates.crate.impl.Crate crate =
-                    su.nightexpress.excellentcrates.ExcellentCratesAPI.getCrateManager().getCrateById(itemRequest.itemId);
+                    su.nightexpress.excellentcrates.CratesAPI.getCrateManager().getCrateById(itemRequest.itemId);
 
             if (crate != null) {
-                crate.onSave();
+                crate.save();
                 result.itemStack = crate.getItem();
 
                 if (useAmount > 1)

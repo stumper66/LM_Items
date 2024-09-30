@@ -10,6 +10,7 @@ import net.Indyuce.mmoitems.api.item.build.MMOItemBuilder;
 import net.Indyuce.mmoitems.api.item.mmoitem.MMOItem;
 import net.Indyuce.mmoitems.api.item.template.MMOItemTemplate;
 import net.Indyuce.mmoitems.manager.TierManager;
+import net.Indyuce.mmoitems.stat.type.ItemStat;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -105,8 +106,15 @@ public class MMOItems implements ItemsAPI, SupportsExtras {
         int itemLevel = 0;
         String itemTier = null;
         if (itemRequest.extras != null){
-            if (itemRequest.extras.containsKey("ItemLevel"))
-                itemLevel = Utils.getIntValue(itemRequest.extras, "ItemLevel", 0);
+            final Integer itemLevelInt = Utils.getIntNValue(itemRequest.extras, "ItemLevel");
+            if (itemLevelInt != null)
+                itemLevel = itemLevelInt;
+            else{
+                final Double itemLevelDbl = Utils.getDblNValue(itemRequest.extras, "ItemLevel");
+                if (itemLevelDbl != null)
+                    itemLevel = (int) Math.round(itemLevelDbl);
+            }
+
             if (itemRequest.extras.containsKey("ItemTier"))
                 itemTier = Utils.getStringValue(itemRequest.extras, "ItemTier");
         }

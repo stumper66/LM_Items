@@ -6,7 +6,7 @@
 
     <groupId>io.github.stumper66</groupId>
     <artifactId>LM_Items</artifactId>
-    <version>1.3.3</version>
+    <version>1.3.3.1</version>
     <packaging>jar</packaging>
 
     <name>LM_Items</name>
@@ -75,24 +75,24 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-gpg-plugin</artifactId>-->
+<!--                <version>3.1.0</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>sign-artifacts</id>-->
+<!--                        <phase>verify</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>sign</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
         <resources>
             <resource>
-                <directory>src/io/github/stumper66/lm_items/resources</directory>
+                <directory>src/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
@@ -207,15 +207,15 @@
             <!-- https://github.com/nulli0n/NexEngine-spigot -->
             <!-- used by ExcellentCrates -->
             <groupId>nomaven</groupId>
-            <artifactId>NexEngine</artifactId>
-            <version>2.2.12</version>
+            <artifactId>nightcore</artifactId>
+            <version>2.6.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <!-- https://www.spigotmc.org/resources/excellentcrates-advanced-custom-crates.48732/ -->
             <groupId>nomaven</groupId>
             <artifactId>ExcellentCrates</artifactId>
-            <version>5.0.0</version>
+            <version>5.3.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

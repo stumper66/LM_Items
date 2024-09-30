@@ -17,7 +17,7 @@ public class ExternalItemRequest {
     public @Nullable String itemType;
     public Double amount;
     public @Nullable Map<String, Object> extras;
-    // LM 1.3.0 added fields:
+    // LMI 1.3.0 added fields:
     public boolean getMultipleItems;
     public boolean isDebugEnabled; // for possible future use
     public @Nullable List<String> allowedList;
