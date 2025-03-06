@@ -43,9 +43,9 @@ public class MythicMobs implements ItemsAPI {
                 (int) Math.round(itemRequest.amount);
 
         result.itemStacks = new LinkedList<>();
-        for (int i = 0; i < amount; i++) {
-            result.itemStacks.add((new BukkitItemStack(itemRequest.itemId)).build());
-        }
+        final BukkitItemStack bukkitItemStack = (BukkitItemStack) item.get().generateItemStack(amount);
+        result.itemStacks.add(bukkitItemStack.getItemStack());
+
         if (!result.itemStacks.isEmpty())
             result.itemStack = result.itemStacks.iterator().next();
 
