@@ -16,6 +16,7 @@ LM Items enables items from the following plugins to be dropped using a Levelled
 [MagicHealth](https://www.spigotmc.org/resources/magichealth.97199/)  
 [MMOItems](https://www.spigotmc.org/resources/mmoitems.39267/)  
 [Oraxen](https://www.spigotmc.org/resources/%E2%98%84%EF%B8%8F-oraxen-add-items-blocks-armors-hats-food-furnitures-plants-and-gui-1-18-1-20-4.72448/)  
+[Nexo](https://polymart.org/product/6901/nexo)
 [ProRPGItems](https://www.spigotmc.org/resources/prorpgitems-most-powerful-custom-items-generator-gems-repair-drops-sets-and-more.99713/)  
 [Reforges](https://www.spigotmc.org/resources/30-sale-%E2%8F%B3-reforges-%E2%AD%95-create-custom-reforges-%E2%9C%85-item-modfiers-%E2%9C%A8-reforge-stones-gui-npc-support.95273/)  
 [Talismans](https://www.spigotmc.org/resources/30-sale-%E2%8F%B3-talismans-%E2%AD%95-create-custom-talismans-%E2%9C%85-powerful-passive-effects-%E2%9C%A8-talisman-bag-levels.87377/)  
