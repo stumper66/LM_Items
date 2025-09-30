@@ -6,24 +6,27 @@
 
     <groupId>io.github.stumper66</groupId>
     <artifactId>LM_Items</artifactId>
-    <version>1.3.4</version>
+    <version>1.3.5</version>
     <packaging>jar</packaging>
 
     <name>LM_Items</name>
     <description>Allows custom items in custom drops for LevelledMobs</description>
     <url>https://github.com/stumper66/LM_Items</url>
+
     <licenses>
         <license>
             <name>GNU AGPL v3.0</name>
             <url>https://www.gnu.org/licenses/agpl-3.0.en.html</url>
         </license>
     </licenses>
+
     <developers>
         <developer>
             <name>stumper66</name>
             <url>https://github.com/stumper66</url>
         </developer>
     </developers>
+
     <scm>
         <url>https://github.com/stumper66/LM_Items</url>
     </scm>
@@ -32,11 +35,41 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+
+        <!-- Pin versions in one spot -->
+        <ver.oraxen>1.166.0</ver.oraxen>
+        <ver.paper>1.20.4-R0.1-SNAPSHOT</ver.paper>
+        <ver.codex>1.1.1-R0.3</ver.codex>
+        <ver.promccore>1.0.3.9</ver.promccore>
+        <ver.prorpgitems>1.0.3.16</ver.prorpgitems>
+        <ver.itemedit>2.17</ver.itemedit>
+        <ver.cwp>release-1.0.1</ver.cwp>
+        <ver.nightcore>2.7.12</ver.nightcore>
+        <ver.excellentcrates>6.2.1</ver.excellentcrates>
+        <ver.coins>1.13</ver.coins>
+        <ver.mythiclib>1.3.1</ver.mythiclib>
+        <ver.mythicdist>5.8.0</ver.mythicdist>
+        <ver.score>3.9.9</ver.score>
+        <ver.magichealth>1.4.5</ver.magichealth>
+        <ver.mmoitems_api>6.9.5-SNAPSHOT</ver.mmoitems_api>
+        <ver.nexo>1.10.0</ver.nexo>
+        <ver.combatweaponrypro>1.5.7</ver.combatweaponrypro>
+        <ver.customcrafting>3.16.8.1</ver.customcrafting>
+        <ver.executableitems>5.9.9</ver.executableitems>
+        <ver.wolfyutilities>4.16.1.0</ver.wolfyutilities>
+        <ver.customitems>1.0</ver.customitems>
+        <ver.itemsadder>3.0.0</ver.itemsadder>
+        <ver.morepersistenttypes>2.4.0</ver.morepersistenttypes>
+        <ver.eco>6.57.2</ver.eco>
+        <ver.hdbapi>1.3.2</ver.hdbapi>
+        <ver.annotations>24.1.0</ver.annotations>
+        <ver.authlib>3.13.56</ver.authlib>
     </properties>
 
     <build>
         <defaultGoal>clean package</defaultGoal>
         <sourceDirectory>src</sourceDirectory>
+
         <plugins>
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
@@ -49,6 +82,7 @@
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -56,12 +90,11 @@
                 <executions>
                     <execution>
                         <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
+                        <goals><goal>jar-no-fork</goal></goals>
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -69,27 +102,12 @@
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
+                        <goals><goal>jar</goal></goals>
                     </execution>
                 </executions>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-gpg-plugin</artifactId>-->
-<!--                <version>3.1.0</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>sign-artifacts</id>-->
-<!--                        <phase>verify</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>sign</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
         </plugins>
+
         <resources>
             <resource>
                 <directory>src/resources</directory>
@@ -110,10 +128,13 @@
     </distributionManagement>
 
     <repositories>
+        <!-- Phoenix Plugin Repos -->
         <repository>
-            <id>maven</id>
-            <url>https://mvnrepository.com/artifact/org.apache.maven.plugins/</url>
+            <id>phoenix</id>
+            <url>https://nexus.phoenixdevt.fr/repository/maven-public/</url>
         </repository>
+
+        <!-- Paper & Spigot group -->
         <repository>
             <id>papermc</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
@@ -122,202 +143,299 @@
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
+
+        <!-- Oraxen -->
         <repository>
-            <id>jitpack-repo</id>
-            <url>https://jitpack.io</url>
+            <id>oraxen</id>
+            <url>https://repo.oraxen.com/releases</url>
         </repository>
+
+        <!-- PhoenixDevT (Lumine ecosystem: MythicLib/MMOItems) -->
         <repository>
-            <id>phoenix</id>
+            <id>phoenixdevt</id>
             <url>https://nexus.phoenixdevt.fr/repository/maven-public/</url>
         </repository>
+
+        <!-- Lumine public (historic MythicLib coordinates) -->
         <repository>
-            <id>auxilor</id>
-            <url>https://repo.auxilor.io/repository/maven-public/</url>
-        </repository>
-        <repository>
-            <id>nexus</id>
-            <name>Lumine Releases</name>
+            <id>lumine</id>
             <url>https://mvn.lumine.io/repository/maven-public/</url>
         </repository>
+
+        <!-- NightExpress (NightCore/ExcellentCrates/CoinsEngine) -->
         <repository>
-            <id>maven_central</id>
-            <name>Maven Central</name>
+            <id>nightexpress-releases</id>
+            <url>https://repo.nightexpressdev.com/releases</url>
+        </repository>
+
+        <!-- WolfyUtilities -->
+        <repository>
+            <id>wolfyscript-public</id>
+            <url>https://maven.wolfyscript.com/repository/public/</url>
+        </repository>
+
+        <!-- Nexo -->
+        <repository>
+            <id>nexomc-releases</id>
+            <url>https://repo.nexomc.com/releases</url>
+        </repository>
+        <repository>
+            <id>nexomc-snapshots</id>
+            <url>https://repo.nexomc.com/snapshots</url>
+            <releases><enabled>false</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+
+        <!-- Triumph GUI: Oraxen may pull 3.2.0-SNAPSHOT -->
+        <repository>
+            <id>triumph-snapshots</id>
+            <url>https://repo.triumphteam.dev/snapshots</url>
+            <releases><enabled>false</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+
+        <!-- Libby (net.byteflux:libby-bukkit) -->
+        <repository>
+            <id>alessiodp</id>
+            <url>https://repo.alessiodp.com/releases/</url>
+        </repository>
+
+        <!-- PlayerAnimator (com.ticxo:PlayerAnimator:R1.2.8) -->
+        <repository>
+            <id>mineinabyss</id>
+            <url>https://repo.mineinabyss.com/releases</url>
+        </repository>
+
+        <!-- JeffMedia (MorePersistentDataTypes – also on Central, this is a backup) -->
+        <repository>
+            <id>jeff-media</id>
+            <url>https://mvnrepository.com/artifact/com.jeff-media/</url>
+        </repository>
+
+        <!-- JitPack (for GitHub-only libs like ItemEdit/Custom-Item-Api, if you need them) -->
+        <repository>
+            <id>jitpack</id>
+            <url>https://jitpack.io</url>
+        </repository>
+
+        <!-- Central -->
+        <repository>
+            <id>central</id>
             <url>https://repo.maven.apache.org/maven2/</url>
         </repository>
+
+        <repository>
+            <id>lumine.io</id>
+            <url>https://mvn.lumine.io/repository/maven-public/</url>
+        </repository>
+
     </repositories>
 
     <dependencies>
+        <!-- Basics -->
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>24.1.0</version>
+            <version>${ver.annotations}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.mojang</groupId>
             <artifactId>authlib</artifactId>
-            <version>3.13.56</version>
+            <version>${ver.authlib}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Paper API -->
         <dependency>
-            <!-- https://www.spigotmc.org/resources/combat-weaponry-plus-1-20.84248/ -->
-            <groupId>nomaven</groupId>
-            <artifactId>CombatWeaponryPlus</artifactId>
-            <version>1.5.7</version>
-            <scope>system</scope>
-            <!-- this plugin doesn't even have a pom! -->
-            <systemPath>${env.LIBS}/CombatWeaponryPlus v1.5.7 (1.20).jar</systemPath>
-        </dependency>
-        <dependency>
-            <!-- https://mvnrepository.com/artifact/io.lumine/Mythic-Dist -->
-            <groupId>io.lumine</groupId>
-            <artifactId>Mythic-Dist</artifactId>
-            <version>5.8.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <!-- https://www.spigotmc.org/resources/%E2%98%84%EF%B8%8F-oraxen-add-items-blocks-armors-hats-food-furnitures-plants-and-gui-1-18-1-20-4.72448/ -->
-            <groupId>nomaven</groupId>
-            <artifactId>Oraxen</artifactId>
-            <version>1.166.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <!-- https://www.spigotmc.org/resources/itemedit-1-8-x-1-20-x.40993/ -->
-            <groupId>nomaven</groupId>
-            <artifactId>ItemEdit</artifactId>
-            <version>3.5.5</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <!-- https://www.spigotmc.org/resources/prorpgitems-most-powerful-custom-items-generator-gems-repair-drops-sets-and-more.99713/ -->
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.20.4-R0.1-SNAPSHOT</version>
+            <version>${ver.paper}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <!-- https://www.spigotmc.org/resources/promccore.93608/ -->
-            <groupId>nomaven</groupId>
-            <artifactId>promccore</artifactId>
-            <version>1.0.3.9</version>
-            <scope>provided</scope>
-        </dependency>
+
+        <!-- Oraxen API -->
         <dependency>
             <groupId>nomaven</groupId>
-            <artifactId>prorpgitems</artifactId>
-            <version>1.0.3.16</version>
+            <artifactId>oraxen</artifactId>
+            <version>${ver.oraxen}</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
-            <!-- https://github.com/nulli0n/NexEngine-spigot -->
-            <!-- used by ExcellentCrates -->
+            <groupId>com.jeff-media</groupId>
+            <artifactId>MorePersistentDataTypes</artifactId>
+            <version>${ver.morepersistenttypes}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Nexo -->
+        <dependency>
+            <groupId>com.nexomc</groupId>
+            <artifactId>nexo</artifactId>
+            <version>${ver.nexo}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- MythicMobs (dist) for events/hooks you already had -->
+        <dependency>
+            <groupId>io.lumine</groupId>
+            <artifactId>Mythic-Dist</artifactId>
+            <version>${ver.mythicdist}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- MythicLib + MMOItems API (replace old nomaven ones) -->
+        <dependency>
             <groupId>nomaven</groupId>
-            <artifactId>nightcore</artifactId>
-            <version>2.6.4</version>
+            <artifactId>MythicLib</artifactId>
+            <version>${ver.mythiclib}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <!-- https://www.spigotmc.org/resources/excellentcrates-advanced-custom-crates.48732/ -->
             <groupId>nomaven</groupId>
-            <artifactId>ExcellentCrates</artifactId>
-            <version>5.3.2</version>
+            <artifactId>MMOItems</artifactId>
+            <version>${ver.mmoitems_api}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <!-- https://www.spigotmc.org/resources/customcrafting-advanced-custom-recipe-plugin-1-16-1-19-free.55883/ -->
-            <groupId>nomaven</groupId>
-            <artifactId>CustomCrafting</artifactId>
-            <version>3.16.8.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <!-- https://www.curseforge.com/minecraft/bukkit-plugins/wolfyutilities -->
-            <groupId>nomaven</groupId>
-            <artifactId>WolfyUtilities</artifactId>
-            <version>4.16.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <!-- https://www.spigotmc.org/resources/magichealth.97199/ -->
-            <groupId>nomaven</groupId>
-            <artifactId>MagicHealth</artifactId>
-            <version>1.4.5</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <!-- https://www.spigotmc.org/resources/%E2%9C%A8itemsadder%E2%AD%90emotes-mobs-items-armors-hud-gui-emojis-blocks-wings-hats-liquids.73355/ -->
-            <groupId>com.github.LoneDev6</groupId>
-            <artifactId>api-itemsadder</artifactId>
-            <version>3.0.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <!-- https://polymart.org/resource/custom-items.1 -->
-            <groupId>nomaven</groupId>
-            <artifactId>CustomItemsAPI</artifactId>
-            <version>1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <!-- https://github.com/Auxilor/eco -->
-            <groupId>com.willfp</groupId>
-            <artifactId>eco</artifactId>
-            <version>6.57.2</version>
-            <scope>provided</scope>
-        </dependency>
+
         <dependency>
             <!-- https://www.spigotmc.org/resources/custom-items-free-executable-items.77578/ -->
             <groupId>nomaven</groupId>
             <artifactId>ExecutableItems</artifactId>
-            <version>5.9.9</version>
+            <version>${ver.executableitems}</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <!-- https://www.spigotmc.org/resources/custom-items-free-executable-items.77578/ -->
             <!-- Used by ExecutableItems -->
             <groupId>nomaven</groupId>
             <artifactId>SCore</artifactId>
-            <version>3.9.9</version>
-            <scope>provided</scope>
-        </dependency>
-            <!-- https://www.spigotmc.org/resources/mmoitems-premium.39267/ -->
-        <dependency>
-            <groupId>nomaven</groupId>
-            <artifactId>MMOItems</artifactId>
-            <version>6.9.5-SNAPSHOT</version>
+            <version>${ver.score}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <!-- https://www.spigotmc.org/resources/mythiclib.90306/ -->
-            <!-- Used by MMOItems -->
+            <!-- https://www.spigotmc.org/resources/magichealth.97199/ -->
             <groupId>nomaven</groupId>
-            <artifactId>MythicLib</artifactId>
-            <version>1.3.1</version>
+            <artifactId>MagicHealth</artifactId>
+            <version>${ver.magichealth}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- NightExpress stack (replaces nightcore/excellentcrates/coins 'nomaven') -->
+        <dependency>
+            <groupId>su.nightexpress.nightcore</groupId>
+            <artifactId>main</artifactId>
+            <version>${ver.nightcore}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>su.nightexpress.excellentcrates</groupId>
+            <artifactId>ExcellentCrates</artifactId>
+            <version>${ver.excellentcrates}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <!-- https://www.spigotmc.org/resources/coins.33382/ -->
             <groupId>nomaven</groupId>
             <artifactId>Coins</artifactId>
-            <version>1.13</version>
+            <version>${ver.coins}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- WolfyUtilities + (optionally) CustomCrafting -->
         <dependency>
-            <!-- https://github.com/Arcaniax-Development/HeadDatabase-API -->
+            <!-- https://www.curseforge.com/minecraft/bukkit-plugins/wolfyutilities -->
+            <groupId>nomaven</groupId>
+            <artifactId>WolfyUtilities</artifactId>
+            <version>${ver.wolfyutilities}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <!-- https://www.spigotmc.org/resources/customcrafting-advanced-custom-recipe-plugin-1-16-1-19-free.55883/ -->
+            <groupId>nomaven</groupId>
+            <artifactId>CustomCrafting</artifactId>
+            <version>${ver.customcrafting}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ItemsAdder API -->
+        <dependency>
+            <groupId>com.github.LoneDev6</groupId>
+            <artifactId>api-itemsadder</artifactId>
+            <version>${ver.itemsadder}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <!-- https://www.spigotmc.org/resources/promccore.93608/ -->
+            <groupId>nomaven</groupId>
+            <artifactId>promccore</artifactId>
+            <version>${ver.promccore}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>nomaven</groupId>
+            <artifactId>prorpgitems</artifactId>
+            <version>${ver.prorpgitems}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- CombatWeaponryPlus via JitPack -->
+        <dependency>
+            <!-- https://www.spigotmc.org/resources/combat-weaponry-plus-1-20.84248/ -->
+            <groupId>nomaven</groupId>
+            <artifactId>CombatWeaponryPlus</artifactId>
+            <version>${ver.combatweaponrypro}</version>
+            <scope>system</scope>
+            <!-- this plugin doesn't even have a pom! -->
+            <systemPath>${env.LIBS}/CombatWeaponryPlus v1.5.7 (1.20).jar</systemPath>
+        </dependency>
+
+        <!-- ItemEdit via JitPack -->
+        <dependency>
+            <groupId>com.github.emanondev</groupId>
+            <artifactId>ItemEdit</artifactId>
+            <version>${ver.itemedit}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Custom Item API (JitPack) -->
+        <dependency>
+            <groupId>nomaven</groupId>
+            <artifactId>CustomItemsAPI</artifactId>
+            <version>${ver.customitems}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- eco -->
+        <dependency>
+            <groupId>com.willfp</groupId>
+            <artifactId>eco</artifactId>
+            <version>${ver.eco}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- HeadDatabase API -->
+        <dependency>
             <groupId>com.arcaniax</groupId>
             <artifactId>HeadDatabase-API</artifactId>
-            <version>1.3.2</version>
+            <version>${ver.hdbapi}</version>
             <scope>provided</scope>
         </dependency>
+
     </dependencies>
 
     <profiles>
         <profile>
             <id>release</id>
-            <build>
-            </build>
+            <build/>
         </profile>
     </profiles>
 </project>
