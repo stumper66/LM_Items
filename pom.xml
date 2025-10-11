@@ -46,8 +46,6 @@
         <ver.nightcore>2.7.12</ver.nightcore>
         <ver.excellentcrates>6.2.1</ver.excellentcrates>
         <ver.coinsengine>2.5.0</ver.coinsengine>
-        <ver.mythiclib>1.4</ver.mythiclib>
-        <ver.mmoitems_api>6.7.3</ver.mmoitems_api>
         <ver.nexo>1.10.0</ver.nexo>
         <ver.wolfyutilities>3.16.1.0</ver.wolfyutilities>
         <ver.itemsadder>3.0.0</ver.itemsadder>
@@ -117,12 +115,6 @@
     </distributionManagement>
 
     <repositories>
-        <!-- Phoenix Plugin Repos -->
-        <repository>
-            <id>phoenix</id>
-            <url>https://nexus.phoenixdevt.fr/repository/maven-public/</url>
-        </repository>
-
         <!-- Paper & Spigot group -->
         <repository>
             <id>papermc</id>
@@ -213,6 +205,12 @@
             <url>https://repo.maven.apache.org/maven2/</url>
         </repository>
 
+        <!-- Phoenix Plugin Repos -->
+        <repository>
+            <id>phoenix</id>
+            <url>https://nexus.phoenixdevt.fr/repository/maven-public/</url>
+        </repository>
+
     </repositories>
 
     <dependencies>
@@ -272,16 +270,19 @@
         <!-- MythicLib + MMOItems API (replace old nomaven ones) -->
         <dependency>
             <groupId>io.lumine</groupId>
-            <artifactId>MythicLib</artifactId>
-            <version>${ver.mythiclib}</version>
+            <artifactId>MythicLib-dist</artifactId>
+            <version>1.6.2-SNAPSHOT</version>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
+
         <dependency>
             <groupId>net.Indyuce</groupId>
             <artifactId>MMOItems-API</artifactId>
-            <version>${ver.mmoitems_api}</version>
+            <version>6.9.5-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
 
         <!-- NightExpress stack (replaces nightcore/excellentcrates/coins 'nomaven') -->
         <dependency>
@@ -303,11 +304,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- WolfyUtilities + (optionally) CustomCrafting -->
+        <!-- WolfyUtilities -->
         <dependency>
             <groupId>com.wolfyscript.wolfyutilities</groupId>
             <artifactId>wolfyutilities</artifactId>
-            <version>${ver.wolfyutilities}</version>
+            <version>4.19.0.0</version>
             <scope>provided</scope>
         </dependency>
 
