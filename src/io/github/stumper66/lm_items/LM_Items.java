@@ -1,6 +1,6 @@
 package io.github.stumper66.lm_items;
 
-import org.bukkit.Bukkit;
+import io.github.stumper66.lm_items.plugins.helpers.SchedulerCompat;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +28,7 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
 
         registerCommands();
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, this::buildApiClasses, 0L);
+        SchedulerCompat.runLater(this, this::buildApiClasses, 1L);
 
         Utils.logger.info(String.format("LM_Items: start-up complete, took %s ms",
                 (System.currentTimeMillis() - startedTime)));
