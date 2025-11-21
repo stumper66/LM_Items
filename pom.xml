@@ -6,7 +6,7 @@
 
     <groupId>io.github.stumper66</groupId>
     <artifactId>LM_Items</artifactId>
-    <version>1.3.5</version>
+    <version>1.3.5.1</version>
     <packaging>jar</packaging>
 
     <name>LM_Items</name>
@@ -44,8 +44,8 @@
         <ver.prorpgitems>1.0.3.16</ver.prorpgitems>
         <ver.itemedit>2.17</ver.itemedit>
         <ver.cwp>release-1.0.1</ver.cwp>
-        <ver.nightcore>2.7.12</ver.nightcore>
-        <ver.excellentcrates>6.2.1</ver.excellentcrates>
+        <ver.nightcore>2.10.2</ver.nightcore>
+        <ver.excellentcrates>6.5.0</ver.excellentcrates>
         <ver.coins>1.13</ver.coins>
         <ver.mythiclib>1.3.1</ver.mythiclib>
         <ver.mythicdist>5.8.0</ver.mythicdist>
