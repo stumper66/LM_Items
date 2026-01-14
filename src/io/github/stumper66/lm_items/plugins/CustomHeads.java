@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
 
-@SuppressWarnings("unused")
 public class CustomHeads implements ItemsAPI {
     public boolean getIsInstalled() {
         return true;

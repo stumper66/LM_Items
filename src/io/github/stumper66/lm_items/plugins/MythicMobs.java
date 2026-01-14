@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Optional;
 
-@SuppressWarnings("unused")
 public class MythicMobs implements ItemsAPI {
     @Override
     public boolean getIsInstalled()  {

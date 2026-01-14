@@ -1,6 +1,26 @@
 package io.github.stumper66.lm_items;
 
-import org.bukkit.Bukkit;
+import io.github.stumper66.lm_items.plugins.Coins;
+import io.github.stumper66.lm_items.plugins.CombatWeaponryPlusImpl;
+import io.github.stumper66.lm_items.plugins.CustomCrafting;
+import io.github.stumper66.lm_items.plugins.CustomHeads;
+import io.github.stumper66.lm_items.plugins.CustomItems;
+import io.github.stumper66.lm_items.plugins.EcoAPI;
+import io.github.stumper66.lm_items.plugins.ExcellentCrates;
+import io.github.stumper66.lm_items.plugins.ExecutableItems;
+import io.github.stumper66.lm_items.plugins.HeadDatabase;
+import io.github.stumper66.lm_items.plugins.ItemEdit;
+import io.github.stumper66.lm_items.plugins.ItemsAdder;
+import io.github.stumper66.lm_items.plugins.MMOItems;
+import io.github.stumper66.lm_items.plugins.MagicHealth;
+import io.github.stumper66.lm_items.plugins.MythicMobs;
+import io.github.stumper66.lm_items.plugins.Nexo;
+import io.github.stumper66.lm_items.plugins.Oraxen;
+import io.github.stumper66.lm_items.plugins.ecosupported.EcoArmor;
+import io.github.stumper66.lm_items.plugins.ecosupported.EcoCrates;
+import io.github.stumper66.lm_items.plugins.ecosupported.EcoItems;
+import io.github.stumper66.lm_items.plugins.ecosupported.Reforges;
+import io.github.stumper66.lm_items.plugins.ecosupported.Talismans;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -27,8 +47,7 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
         final long startedTime = System.currentTimeMillis();
 
         registerCommands();
-
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, this::buildApiClasses, 0L);
+        buildApiClasses();
 
         Utils.logger.info(String.format("LM_Items: start-up complete, took %s ms",
                 (System.currentTimeMillis() - startedTime)));
@@ -40,31 +59,30 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
         classesAreBuilding = true;
         Utils.logger.info("LM_Items: Building API classes");
 
-        final List<String> names = List.of(
-                "Coins",
-                "MMOItems",
-                "ExecutableItems",
-                "EcoAPI",
-                "CustomItems",
-                "ItemsAdder",
-                "MagicHealth",
-                "CustomCrafting",
-                "ExcellentCrates",
-                "HeadDatabase",
-                "ItemEdit",
-                "Oraxen",
-                "Nexo",
-                "MythicMobs",
-                "CombatWeaponryPlusImpl",
-                "CustomHeads"
+        final List<Class<?>> classes = List.of(
+                Coins.class,
+                MMOItems.class,
+                ExecutableItems.class,
+                EcoAPI.class,
+                CustomItems.class,
+                ItemsAdder.class,
+                MagicHealth.class,
+                CustomCrafting.class,
+                ExcellentCrates.class,
+                HeadDatabase.class,
+                ItemEdit.class,
+                Oraxen.class,
+                Nexo.class,
+                MythicMobs.class,
+                CombatWeaponryPlusImpl.class,
+                CustomHeads.class
         );
 
-        for (final String name : names) {
+        for (final Class<?> clazz : classes) {
             ItemsAPI api = null;
             try {
-                final Class<?> clazz = Class.forName("io.github.stumper66.lm_items.plugins." + name);
                 api = (ItemsAPI) clazz.getConstructor().newInstance();
-            } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException |
+            } catch (NoSuchMethodException | InvocationTargetException |
                      InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
@@ -82,23 +100,21 @@ public class LM_Items extends JavaPlugin implements LM_Items_API {
             return;
 
         // eco plugin is required for all of the following:
-        final List<String> ecoSupported = List.of(
-                "EcoArmor", "EcoCrates", "EcoItems", "Reforges", "Talismans"
+        final List<Class<?>> ecoSupported = List.of(
+                EcoArmor.class, EcoCrates.class, EcoItems.class, Reforges.class, Talismans.class
         );
 
-        for (final String name : ecoSupported) {
+        for (final Class<?> clazz : ecoSupported) {
             ItemsAPI api = null;
             try {
-                final Class<?> clazz = Class.forName("io.github.stumper66.lm_items.plugins.ecosupported." + name);
                 api = (ItemsAPI) clazz.getConstructor().newInstance();
-            } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException |
+            } catch (NoSuchMethodException | InvocationTargetException |
                      InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
             if (api != null)
                 this.supportedPlugins.put(api.getName(), api);
         }
-
     }
 
     private void registerCommands(){

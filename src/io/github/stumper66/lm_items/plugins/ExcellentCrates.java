@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.List;
 
-@SuppressWarnings("unused")
 public class ExcellentCrates implements ItemsAPI {
     public ExcellentCrates() {
         checkDeps();

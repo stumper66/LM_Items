@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.Collections;
 
-@SuppressWarnings("unused")
 public class Oraxen implements ItemsAPI{
     @Override
     public boolean getIsInstalled()  {
