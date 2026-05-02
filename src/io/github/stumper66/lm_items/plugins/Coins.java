@@ -3,13 +3,14 @@ package io.github.stumper66.lm_items.plugins;
 import io.github.stumper66.lm_items.ExternalItemRequest;
 import io.github.stumper66.lm_items.GetItemResult;
 import io.github.stumper66.lm_items.ItemsAPI;
+import me.justeli.coins.item.CoinMeta;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 public class Coins implements ItemsAPI {
     private @Nullable Plugin coinsPlugin;
@@ -33,10 +34,13 @@ public class Coins implements ItemsAPI {
         if (!result.pluginIsInstalled) return result;
 
         final me.justeli.coins.Coins coins = (me.justeli.coins.Coins) coinsPlugin;
-        assert coins != null;
+        if (coins == null) return result;
 
-        if (itemRequest.amount != null)
-            result.itemStack = coins.getCreateCoin().createDropped(itemRequest.amount);
+        if (itemRequest.amount != null && itemRequest.amount > 0d) {
+            result.itemStack = coins.getCreateCoin().createOther()
+                    .setData(CoinMeta.COINS_WORTH, itemRequest.amount)
+                    .build();
+        }
         else
             result.itemStack = coins.getCreateCoin().createDropped();
 
@@ -44,6 +48,10 @@ public class Coins implements ItemsAPI {
     }
 
     public @NotNull Collection<String> getItemTypes() {
-        return Collections.emptyList();
+        return List.of("coin");
+    }
+
+    public @NotNull Collection<String> getSupportedExtras() {
+        return List.of("amount");
     }
 }
