@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-@SuppressWarnings("unused")
 public class ExecutableItems implements ItemsAPI, SupportsExtras {
     public ExecutableItems() {
         checkDeps();

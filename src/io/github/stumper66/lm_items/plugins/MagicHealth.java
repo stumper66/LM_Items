@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
-@SuppressWarnings("unused")
 public class MagicHealth implements ItemsAPI {
     public MagicHealth(){
         this.itemMappings = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);

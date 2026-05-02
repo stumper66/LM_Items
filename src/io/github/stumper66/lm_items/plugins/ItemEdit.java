@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.Collections;
 
-@SuppressWarnings("unused")
 public class ItemEdit implements ItemsAPI {
     public boolean getIsInstalled() {
         return Bukkit.getPluginManager().getPlugin(getName()) != null;

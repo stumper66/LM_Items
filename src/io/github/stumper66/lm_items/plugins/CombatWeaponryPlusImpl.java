@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.Collections;
 
-@SuppressWarnings("unused")
 public class CombatWeaponryPlusImpl implements ItemsAPI {
     private Plugin plugin;
 

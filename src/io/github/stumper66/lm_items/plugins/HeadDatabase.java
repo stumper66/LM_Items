@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.Collections;
 
-@SuppressWarnings("unused")
 public class HeadDatabase implements ItemsAPI {
 
     public boolean getIsInstalled() {

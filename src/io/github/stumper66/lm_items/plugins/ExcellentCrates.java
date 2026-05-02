@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.List;
 
-@SuppressWarnings("unused")
 public class ExcellentCrates implements ItemsAPI {
     public ExcellentCrates() {
         checkDeps();
@@ -49,8 +48,8 @@ public class ExcellentCrates implements ItemsAPI {
                     su.nightexpress.excellentcrates.CratesAPI.getKeyManager().getKeyById(itemRequest.itemId);
 
             if (key != null) {
-                result.itemStack = key.getItem();
-                if (useAmount > 1)
+                result.itemStack = key.getItem().getItemStack();
+                if (useAmount > 1 && result.itemStack != null)
                     result.itemStack.setAmount(Math.min(useAmount, result.itemStack.getMaxStackSize()));
             }
         }
@@ -59,10 +58,10 @@ public class ExcellentCrates implements ItemsAPI {
                     su.nightexpress.excellentcrates.CratesAPI.getCrateManager().getCrateById(itemRequest.itemId);
 
             if (crate != null) {
-                crate.save();
-                result.itemStack = crate.getItem();
+                crate.saveIfDirty();
+                result.itemStack = crate.getItem().getItemStack();
 
-                if (useAmount > 1)
+                if (useAmount > 1 && result.itemStack != null)
                     result.itemStack.setAmount(Math.min(useAmount, result.itemStack.getMaxStackSize()));
             }
         }

@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("unused")
 public class ItemsAdder implements ItemsAPI, SupportsExtras {
     public boolean getIsInstalled() {
         return Bukkit.getPluginManager().getPlugin(getName()) != null;

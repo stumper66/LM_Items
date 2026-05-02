@@ -100,10 +100,9 @@ public class Commands implements CommandExecutor, TabCompleter {
         final StringBuilder sb = new StringBuilder();
 
         if (isExtras){
-            if (itemsAPI instanceof SupportsExtras){
-                final SupportsExtras supportsExtras = (SupportsExtras) itemsAPI;
+            if (itemsAPI instanceof SupportsExtras supportsExtras){
                 for (final String name : supportsExtras.getSupportedExtras()){
-                    if (sb.length() > 0) sb.append(", ");
+                    if (!sb.isEmpty()) sb.append(", ");
                     sb.append(name);
                 }
             }
