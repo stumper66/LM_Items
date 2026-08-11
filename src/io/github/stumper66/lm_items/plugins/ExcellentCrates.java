@@ -48,8 +48,8 @@ public class ExcellentCrates implements ItemsAPI {
                     su.nightexpress.excellentcrates.CratesAPI.getKeyManager().getKeyById(itemRequest.itemId);
 
             if (key != null) {
-                result.itemStack = key.getItem().getItemStack();
-                if (useAmount > 1 && result.itemStack != null)
+                result.itemStack = key.getItemStack(true);
+                if (useAmount > 1)
                     result.itemStack.setAmount(Math.min(useAmount, result.itemStack.getMaxStackSize()));
             }
         }
