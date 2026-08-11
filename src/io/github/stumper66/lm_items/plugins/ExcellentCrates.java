@@ -38,9 +38,8 @@ public class ExcellentCrates implements ItemsAPI {
         if (!result.pluginIsInstalled) return result;
 
         int useAmount = 1;
-        if (itemRequest.amount != null && result.itemStack != null) {
-            useAmount = (int)(double)itemRequest.amount;
-        }
+        if (itemRequest.amount != null)
+            useAmount = itemRequest.amount.intValue();
 
         if (itemRequest.itemType == null || itemRequest.itemType.isEmpty() || "key".equalsIgnoreCase(itemRequest.itemType))
         {
